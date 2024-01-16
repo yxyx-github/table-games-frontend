@@ -3,6 +3,7 @@ import deDE from './de-DE'
 import enUS from './en-US'
 
 const i18nConfig = {
+    legacy: false,
     locale: 'de-DE',
     fallbackLocale: 'en-US',
     messages: {
