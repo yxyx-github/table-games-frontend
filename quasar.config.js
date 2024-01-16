@@ -71,7 +71,9 @@ module.exports = configure(function (/* ctx */) {
 
             extendViteConf(viteConf) {
                 viteConf.resolve.alias['@'] = path.resolve(__dirname, 'src')
-                viteConf.resolve.alias['quasar/dist/quasar.sass'] = path.resolve(__dirname, 'src/css/app.css') // TODO: check if quasar.sass or quasar.css
+                viteConf.resolve.alias['quasar/dist/quasar.css'] = path.resolve(__dirname, 'src/css/app.css')
+                viteConf.resolve.alias['@quasar/extras/material-icons/material-icons.css'] = path.resolve(__dirname, 'src/css/app.css')
+                viteConf.resolve.alias['@quasar/extras/roboto-font/roboto-font.css'] = path.resolve(__dirname, 'src/css/app.css')
                 viteConf.base = './'
             },
             // viteVuePluginOptions: {},
