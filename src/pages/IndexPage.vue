@@ -1,5 +1,5 @@
 <template>
-    IndexPage
+    {{ $t('home') }}
 </template>
 
 <script setup lang="ts">
