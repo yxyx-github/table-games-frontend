@@ -27,10 +27,10 @@ const dateTimeFormats = {
     },
 }
 
-const de = {
+const deDE = {
     messages,
     numberFormats,
     dateTimeFormats,
 }
 
-export default de
+export default deDE

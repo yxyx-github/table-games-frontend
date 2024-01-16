@@ -1,23 +1,22 @@
 import { createI18n } from 'vue-i18n'
-import de from './de'
-import en from './en'
+import deDE from './de-DE'
+import enUS from './en-US'
 
 const i18nConfig = {
-    locale: 'de',
-    fallbackLocale: 'en',
+    locale: 'de-DE',
+    fallbackLocale: 'en-US',
     messages: {
-        de: de.messages,
-        en: en.messages
+        'de-DE': deDE.messages,
+        'en-US': enUS.messages
     },
     numberFormats: {
-        de: de.numberFormats,
-        en: en.numberFormats,
+        'de-DE': deDE.numberFormats,
+        'en-US': enUS.numberFormats,
     },
     datetimeFormats: {
-        de: de.dateTimeFormats,
-        en: en.dateTimeFormats,
+        'de-DE': deDE.dateTimeFormats,
+        'en-US': enUS.dateTimeFormats,
     },
 }
 
-// @ts-ignore
 export default createI18n(i18nConfig)

@@ -5,10 +5,10 @@ const numberFormats = {}
 
 const dateTimeFormats = {}
 
-const en = {
+const enUS = {
     messages,
     numberFormats,
     dateTimeFormats,
 }
 
-export default en
+export default enUS
