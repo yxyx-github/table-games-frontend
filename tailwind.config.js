@@ -1,16 +1,22 @@
-/** @type {import('tailwindcss').Config} */
+const colors = require('tailwindcss/colors')
 
 const mediaQueryVariants = ['mb', '2sm', 'sm', 'md', 'lg', 'xl', '2xl']
 
+/** @type {import('tailwindcss').Config} */
 module.exports = {
-    important: true,
+    important: false,
     content: [
         './src/**/*.{html,js,ts,vue}',
-        './node_modules/primevue/**/*.{vue,js,ts,jsx,tsx}',
+        // './node_modules/primevue/**/*.{vue,js,ts,jsx,tsx}',
     ],
     safelist: [],
     theme: {
-        extend: {},
+        extend: {
+            colors: {
+                primary: colors.blue,
+                surface: colors.gray,
+            }
+        },
         screens: {
             'mb': '0px',
             'xs': '480px',
