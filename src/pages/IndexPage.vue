@@ -1,10 +1,16 @@
 <template>
     <p class="text-red-700">{{ $t('home') }}</p>
-    <Button>test</Button>
+    <div class="flex flex-row gap-2 wrap m-2">
+        <q-btn color="white" text-color="black" label="Standard"/>
+        <q-btn color="primary" label="Primary"/>
+        <q-btn color="secondary" label="Secondary"/>
+        <q-btn color="amber" glossy label="Amber"/>
+        <q-btn color="brown-5" label="Brown 5"/>
+        <q-btn color="deep-orange" glossy label="Deep Orange"/>
+        <q-btn color="purple" label="Purple"/>
+        <q-btn color="black" label="Black"/>
+    </div>
 </template>
 
 <script setup lang="ts">
-import Button from 'primevue/button'
-
-// relative items-center inline-flex text-center align-bottom justify-center leading-[normal] w-12 p-0 py-3 rounded-md text-white dark:text-surface-900 bg-primary-500 dark:bg-primary-400 border border-primary-500 dark:border-primary-400 focus:outline-none focus:outline-offset-0 focus:ring hover:bg-primary-600 dark:hover:bg-primary-300 hover:border-primary-600 dark:hover:border-primary-300 focus:ring-primary-400/50 dark:focus:ring-primary-300/50 transition duration-200 ease-in-out cursor-pointer overflow-hidden select-none
 </script>

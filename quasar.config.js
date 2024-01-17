@@ -25,7 +25,6 @@ module.exports = configure(function (/* ctx */) {
         boot: [
             'i18n',
             'axios',
-            'primevue',
         ],
 
         // https://v2.quasar.dev/quasar-cli-vite/quasar-config-js#css
@@ -73,9 +72,6 @@ module.exports = configure(function (/* ctx */) {
 
             extendViteConf(viteConf) {
                 viteConf.resolve.alias['@'] = path.resolve(__dirname, 'src')
-                viteConf.resolve.alias['quasar/dist/quasar.css'] = path.resolve(__dirname, 'src/css/app.css')
-                viteConf.resolve.alias['@quasar/extras/material-icons/material-icons.css'] = path.resolve(__dirname, 'src/css/app.css')
-                viteConf.resolve.alias['@quasar/extras/roboto-font/roboto-font.css'] = path.resolve(__dirname, 'src/css/app.css')
                 viteConf.base = './'
             },
             // viteVuePluginOptions: {},

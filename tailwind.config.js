@@ -7,16 +7,10 @@ module.exports = {
     important: false,
     content: [
         './src/**/*.{html,js,ts,vue}',
-        // './node_modules/primevue/**/*.{vue,js,ts,jsx,tsx}',
     ],
     safelist: [],
     theme: {
-        extend: {
-            colors: {
-                primary: colors.blue,
-                surface: colors.gray,
-            }
-        },
+        extend: {},
         screens: {
             'mb': '0px',
             'xs': '480px',
