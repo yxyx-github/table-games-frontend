@@ -1,4 +1,5 @@
 const messages = {
+    create_new_session: 'Neue Sitzung erstellen',
     home: 'Startseite',
 }
 
