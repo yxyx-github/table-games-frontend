@@ -1,8 +1,12 @@
 <template>
-    <div class="flex flex-col w-screen h-screen">
-        <RouterView/>
+    <div class="flex no-wrap flex-col items-stretch w-screen h-screen">
+        <MainNavigation/>
+        <div class="flex flex-col h-full grow shrink overflow-auto">
+            <RouterView/>
+        </div>
     </div>
 </template>
 
 <script setup lang="ts">
+import MainNavigation from '@/components/MainNavigation.vue'
 </script>
