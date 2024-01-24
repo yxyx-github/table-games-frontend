@@ -15,6 +15,11 @@ const routes: RouteRecordRaw[] = [
                 name: 'session.create',
                 component: () => import('pages/CreateSessionPage.vue')
             },
+            {
+                path: 'session/join',
+                name: 'session.join',
+                component: () => import('pages/JoinSessionPage.vue')
+            },
         ],
     },
 

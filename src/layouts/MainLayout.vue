@@ -1,7 +1,7 @@
 <template>
     <div class="flex no-wrap flex-col items-stretch w-screen h-screen">
         <MainNavigation/>
-        <div class="flex flex-col h-full grow shrink overflow-auto">
+        <div class="flex flex-col h-full grow shrink overflow-auto p-2">
             <RouterView/>
         </div>
     </div>
