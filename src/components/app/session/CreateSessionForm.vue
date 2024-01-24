@@ -13,6 +13,7 @@ const games = ref<Game[]>([])
 
 function init() {
     useGames.gameList().then(gameList => games.value = gameList)
+        .then(() => console.log(games.value))
 }
 
 init()
