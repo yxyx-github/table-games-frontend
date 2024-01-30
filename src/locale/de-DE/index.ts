@@ -1,7 +1,10 @@
 const messages = {
     create_new_session: 'Neue Sitzung erstellen',
+    create_session: 'Sitzung erstellen',
     home: 'Startseite',
     join_session: 'Sitzung beitreten',
+    players: 'Spieler',
+    username: 'Bentzername',
 }
 
 const numberFormats = {
