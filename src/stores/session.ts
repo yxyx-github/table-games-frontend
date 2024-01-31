@@ -2,6 +2,7 @@ import { defineStore } from 'pinia';
 import { api } from '@/boot/axios'
 import { CreateSessionResponse, Session } from '@/types/session'
 import { computed, ref } from 'vue'
+import { Game } from '@/types/game'
 
 export const useSessionStore = defineStore('session', () => {
     const sessionData = ref<Session | null>(null)
@@ -22,12 +23,21 @@ export const useSessionStore = defineStore('session', () => {
         }
     }
 
-    async function create(hostUserName: string, gameName: string) {
+    async function create(hostUserName: string, game: Game) {
         return api.post<CreateSessionResponse>('/session/create', {
             host: hostUserName,
-            game: gameName,
+            game: game.name,
         }).then(res =>
-            session.value = res.data
+            session.value = {
+                sessionToken: res.data.sessionToken,
+                authToken: res.data.authToken,
+                user: {
+                    id: res.data.userId,
+                    name: hostUserName,
+                    host: true,
+                },
+                game: game,
+            }
         )
     }
 

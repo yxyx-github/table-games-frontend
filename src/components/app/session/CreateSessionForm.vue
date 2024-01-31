@@ -40,7 +40,7 @@ const valid = computed<boolean>(() => selectedGame.value !== null && hostUserNam
 
 function submit() {
     if (valid.value) {
-        useSession.create(hostUserName.value, selectedGame.value?.name ?? '').then(session =>
+        useSession.create(hostUserName.value, selectedGame.value as Game).then(session =>
             router.push({ name: 'session.current' })
         ).catch(error =>
             $q.notify({

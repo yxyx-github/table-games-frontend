@@ -1,7 +1,15 @@
+import { Game } from '@/types/game'
+import { User } from '@/types/user'
+
 export type Session = {
     sessionToken: string,
     authToken: string,
-    userID: number,
+    user: User
+    game: Game,
 }
 
-export type CreateSessionResponse = Session
+export type CreateSessionResponse = {
+    sessionToken: string
+    authToken: string
+    userId: number
+}
