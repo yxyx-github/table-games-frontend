@@ -13,8 +13,10 @@ import { useGamesStore } from '@/stores/games'
 import { useI18n } from 'vue-i18n'
 import QuickActions from '@/components/lib/layouts/QuickActions.vue'
 import { useSessionStore } from '@/stores/session'
+import { useRouter } from 'vue-router'
 
 const i18n = useI18n()
+const router = useRouter()
 const useGames = useGamesStore()
 const useSession = useSessionStore()
 
@@ -37,14 +39,15 @@ const valid = computed<boolean>(() => selectedGame.value !== null && hostUserNam
 function submit() {
     if (valid.value) {
         useSession.create(hostUserName.value, selectedGame.value?.name ?? '').then(session =>
-            console.log('session:', session)
+            router.push({ name: 'session.current' })
         )
     }
+    // TODO: Feedback-Message in case of error
 }
 
 function init() {
     useGames.gameList().then(gameList => games.value = gameList)
-        .then(() => console.log(games.value))
+    // TODO: Feedback-Message in case of error
 }
 
 init()

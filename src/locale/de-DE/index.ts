@@ -1,6 +1,7 @@
 const messages = {
     create_new_session: 'Neue Sitzung erstellen',
     create_session: 'Sitzung erstellen',
+    current_session: 'Aktuelle Sitzung',
     home: 'Startseite',
     join_session: 'Sitzung beitreten',
     players: 'Spieler',

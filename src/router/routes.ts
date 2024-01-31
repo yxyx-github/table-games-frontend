@@ -11,6 +11,11 @@ const routes: RouteRecordRaw[] = [
                 component: () => import('pages/IndexPage.vue')
             },
             {
+                path: 'session/current',
+                name: 'session.current',
+                component: () => import('pages/CurrentSessionPage.vue')
+            },
+            {
                 path: 'session/create',
                 name: 'session.create',
                 component: () => import('pages/CreateSessionPage.vue')
