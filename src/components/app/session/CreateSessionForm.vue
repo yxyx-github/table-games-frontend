@@ -2,7 +2,7 @@
     <QuickActions class="mb:min-w-full xs:min-w-96">
         <q-input v-model="hostUserName" :label="$t('username')"/>
         <q-select v-model="selectedGameOption" :options="gameOptions"/>
-        <q-btn type="submit" :label="$t('create_session')"/>
+        <q-btn @click="submit" :disable="!valid" type="submit" color="primary" :label="$t('create_session')"/>
     </QuickActions>
 </template>
 
@@ -12,9 +12,11 @@ import { Game } from '@/types/game'
 import { useGamesStore } from '@/stores/games'
 import { useI18n } from 'vue-i18n'
 import QuickActions from '@/components/lib/layouts/QuickActions.vue'
+import { useSessionStore } from '@/stores/session'
 
 const i18n = useI18n()
 const useGames = useGamesStore()
+const useSession = useSessionStore()
 
 const hostUserName = ref<string>('')
 const games = ref<Game[]>([])
@@ -29,6 +31,16 @@ const gameOptions = computed<{ label: string, value: string }[]>(() =>
         )
 )
 const selectedGameOption = ref<{ label: string, value: string } | null>(null)
+
+const valid = computed<boolean>(() => selectedGame.value !== null && hostUserName.value !== '')
+
+function submit() {
+    if (valid.value) {
+        useSession.create(hostUserName.value, selectedGame.value?.name ?? '').then(session =>
+            console.log('session:', session)
+        )
+    }
+}
 
 function init() {
     useGames.gameList().then(gameList => games.value = gameList)
