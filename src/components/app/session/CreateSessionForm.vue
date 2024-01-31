@@ -14,7 +14,9 @@ import { useI18n } from 'vue-i18n'
 import QuickActions from '@/components/lib/layouts/QuickActions.vue'
 import { useSessionStore } from '@/stores/session'
 import { useRouter } from 'vue-router'
+import { useQuasar } from 'quasar'
 
+const $q = useQuasar()
 const i18n = useI18n()
 const router = useRouter()
 const useGames = useGamesStore()
@@ -40,14 +42,22 @@ function submit() {
     if (valid.value) {
         useSession.create(hostUserName.value, selectedGame.value?.name ?? '').then(session =>
             router.push({ name: 'session.current' })
+        ).catch(error =>
+            $q.notify({
+                message: `${i18n.t('failed_to_create_session')}: ${error}`,
+                color: 'red',
+            })
         )
     }
-    // TODO: Feedback-Message in case of error
 }
 
 function init() {
-    useGames.gameList().then(gameList => games.value = gameList)
-    // TODO: Feedback-Message in case of error
+    useGames.gameList().then(gameList => games.value = gameList).catch(error =>
+            $q.notify({
+                message: `${i18n.t('failed_to_load_game_list')}: ${error}`,
+                color: 'red',
+            })
+    )
 }
 
 init()
