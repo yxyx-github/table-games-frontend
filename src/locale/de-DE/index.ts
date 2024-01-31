@@ -1,4 +1,6 @@
 const messages = {
+    close_session: 'Sitzung beenden',
+    close_session_confirm_message: 'Möchtest du die Sitzung wirklich beenden?',
     create_new_session: 'Neue Sitzung erstellen',
     create_session: 'Sitzung erstellen',
     current_session: 'Aktuelle Sitzung',

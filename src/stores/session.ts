@@ -41,6 +41,17 @@ export const useSessionStore = defineStore('session', () => {
         )
     }
 
+    async function close() {
+        if (session.value !== null) {
+            return api.post('/session/close', {
+                sessionToken: session.value.sessionToken,
+                authToken: session.value.authToken,
+            }).then(() =>
+                leave()
+            )
+        }
+    }
+
     function leave() {
         session.value = null
     }
@@ -49,6 +60,7 @@ export const useSessionStore = defineStore('session', () => {
         session,
         loadFromStorage,
         create,
+        close,
         leave,
     }
 })
