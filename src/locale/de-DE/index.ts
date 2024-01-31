@@ -6,6 +6,7 @@ const messages = {
     failed_to_load_game_list: 'Fehler beim Laden der Spieleliste',
     home: 'Startseite',
     join_session: 'Sitzung beitreten',
+    leave_session: 'Sitzung verlassen',
     players: 'Spieler',
     username: 'Bentzername',
 }

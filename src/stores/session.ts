@@ -41,9 +41,14 @@ export const useSessionStore = defineStore('session', () => {
         )
     }
 
+    function leave() {
+        session.value = null
+    }
+
     return {
         session,
         loadFromStorage,
         create,
+        leave,
     }
 })
