@@ -1,10 +1,10 @@
 <template>
-    <Navigation class="justify-between">
-        <div class="flex flex-row items-stretch justify-start">
+    <Navigation>
+        <template #start>
             <NavigationItem :label="$t('home')" routeName="home"/>
             <NavigationItem v-if="useSession.session !== null" :label="$t('current_session')" routeName="session.current"/>
-        </div>
-        <div class="flex flex-row items-stretch justify-end" v-if="useSession.session !== null">
+        </template>
+        <template #end v-if="useSession.session !== null">
             <q-btn-dropdown color="primary" flat :label="useSession.session.user.name">
                 <q-list>
                     <q-item clickable v-close-popup @click="leaveSession">
@@ -19,7 +19,7 @@
                     </q-item>
                 </q-list>
             </q-btn-dropdown>
-        </div>
+        </template>
     </Navigation>
 </template>
 
