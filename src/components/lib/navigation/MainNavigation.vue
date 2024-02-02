@@ -7,6 +7,13 @@
         <template #end v-if="useSession.session !== null">
             <q-btn-dropdown color="primary" flat :label="useSession.session.user.name">
                 <q-list>
+                    <q-item clickable v-close-popup @click="copySessionToken" :title="$t('click_to_copy')">
+                        <q-item-section>
+                            <q-item-label>
+                                {{ $t('session_token') }}: {{ useSession.session?.sessionToken }}
+                            </q-item-label>
+                        </q-item-section>
+                    </q-item>
                     <q-item clickable v-close-popup @click="leaveSession">
                         <q-item-section>
                             <q-item-label>{{ $t('leave_session') }}</q-item-label>
@@ -35,6 +42,16 @@ const $q = useQuasar()
 const i18n = useI18n()
 const router = useRouter()
 const useSession = useSessionStore()
+
+function copySessionToken() {
+    if (useSession.session !== null) {
+        navigator.clipboard.writeText(useSession.session.sessionToken)
+        $q.notify({
+            message: i18n.t('copied'),
+            color: 'green',
+        })
+    }
+}
 
 function leaveSession() {
     useSession.leave()

@@ -1,6 +1,8 @@
 const messages = {
+    click_to_copy: 'Klicke zum Kopieren',
     close_session: 'Sitzung beenden',
     close_session_confirm_message: 'Möchtest du die Sitzung wirklich beenden?',
+    copied: 'Kopiert',
     create_new_session: 'Neue Sitzung erstellen',
     create_session: 'Sitzung erstellen',
     current_session: 'Aktuelle Sitzung',
