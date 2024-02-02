@@ -1,8 +1,10 @@
 <template>
     <QuickActions class="mb:min-w-full xs:min-w-96">
-        <q-input v-model="hostUserName" :label="$t('username')"/>
-        <q-select v-model="selectedGameOption" :options="gameOptions"/>
-        <q-btn @click="submit" :disable="!valid" type="submit" color="primary" :label="$t('create_session')"/>
+        <Form @submit.prevent="submit">
+            <q-input v-model="hostUserName" :label="$t('username')"/>
+            <q-select v-model="selectedGameOption" :options="gameOptions"/>
+            <q-btn :disable="!valid" type="submit" color="primary" :label="$t('create_session')"/>
+        </Form>
     </QuickActions>
 </template>
 
@@ -15,6 +17,7 @@ import QuickActions from '@/components/lib/layouts/QuickActions.vue'
 import { useSessionStore } from '@/stores/session'
 import { useRouter } from 'vue-router'
 import { useQuasar } from 'quasar'
+import Form from '@/components/lib/forms/Form.vue'
 
 const $q = useQuasar()
 const i18n = useI18n()
