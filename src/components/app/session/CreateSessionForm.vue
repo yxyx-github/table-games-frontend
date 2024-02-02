@@ -1,11 +1,11 @@
 <template>
-    <QuickActions class="mb:min-w-full xs:min-w-96">
+    <CenteredContainer class="mb:min-w-full xs:min-w-96">
         <Form @submit.prevent="submit">
             <q-input v-model="hostUserName" :label="$t('username')"/>
             <q-select v-model="selectedGameOption" :options="gameOptions"/>
             <q-btn :disable="!valid" type="submit" color="primary" :label="$t('create_session')"/>
         </Form>
-    </QuickActions>
+    </CenteredContainer>
 </template>
 
 <script setup lang="ts">
@@ -13,7 +13,7 @@ import { computed, ref } from 'vue'
 import { Game } from '@/types/game'
 import { useGamesStore } from '@/stores/games'
 import { useI18n } from 'vue-i18n'
-import QuickActions from '@/components/lib/layouts/QuickActions.vue'
+import CenteredContainer from '@/components/lib/layouts/CenteredContainer.vue'
 import { useSessionStore } from '@/stores/session'
 import { useRouter } from 'vue-router'
 import { useQuasar } from 'quasar'

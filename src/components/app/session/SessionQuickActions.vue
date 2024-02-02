@@ -1,10 +1,10 @@
 <template>
-    <QuickActions>
+    <CenteredContainer>
         <q-btn color="primary" :label="$t('create_new_session')" @click="$router.push({ name: 'session.create' })"/>
         <q-btn color="primary" :label="$t('join_session')" @click="$router.push({ name: 'session.join' })"/>
-    </QuickActions>
+    </CenteredContainer>
 </template>
 
 <script setup lang="ts">
-import QuickActions from '@/components/lib/layouts/QuickActions.vue'
+import CenteredContainer from '@/components/lib/layouts/CenteredContainer.vue'
 </script>
