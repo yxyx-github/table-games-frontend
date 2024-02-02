@@ -13,3 +13,9 @@ export type CreateSessionResponse = {
     authToken: string
     userId: number
 }
+
+export type JoinSessionResponse = {
+    authToken: string
+    user: User
+    game: Game
+}

@@ -5,11 +5,13 @@ const messages = {
     create_session: 'Sitzung erstellen',
     current_session: 'Aktuelle Sitzung',
     failed_to_create_session: 'Fehler beim Erstellen der Sitzung',
+    failed_to_join_session: 'Fehler beim Beitreten der Sitzung',
     failed_to_load_game_list: 'Fehler beim Laden der Spieleliste',
     home: 'Startseite',
     join_session: 'Sitzung beitreten',
     leave_session: 'Sitzung verlassen',
     players: 'Spieler',
+    session_token: 'Sitzungsschlüssel',
     username: 'Bentzername',
 }
 

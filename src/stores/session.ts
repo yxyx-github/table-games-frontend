@@ -1,6 +1,6 @@
 import { defineStore } from 'pinia';
 import { api } from '@/boot/axios'
-import { CreateSessionResponse, Session } from '@/types/session'
+import { CreateSessionResponse, JoinSessionResponse, Session } from '@/types/session'
 import { computed, ref } from 'vue'
 import { Game } from '@/types/game'
 
@@ -41,6 +41,20 @@ export const useSessionStore = defineStore('session', () => {
         )
     }
 
+    async function join(sessionToken: string, userName: string) {
+        return api.post<JoinSessionResponse>('/session/join', {
+            sessionToken: sessionToken,
+            name: userName,
+        }).then(res =>
+            session.value = {
+                sessionToken: sessionToken,
+                authToken: res.data.authToken,
+                user: res.data.user,
+                game: res.data.game,
+            }
+        )
+    }
+
     async function close() {
         if (session.value !== null) {
             return api.post('/session/close', {
@@ -60,6 +74,7 @@ export const useSessionStore = defineStore('session', () => {
         session,
         loadFromStorage,
         create,
+        join,
         close,
         leave,
     }
