@@ -56,7 +56,6 @@ function copySessionToken() {
 function leaveSession() {
     useSession.leave()
     router.push({ name: 'home' })
-    // TODO: Feedback-Messages
 }
 
 function closeSession() {
@@ -65,9 +64,14 @@ function closeSession() {
         message: i18n.t('close_session_confirm_message'),
         cancel: true,
     }).onOk(() => {
-        useSession.close()
-        router.push({ name: 'home' })
+        useSession.close().then(() =>
+                router.push({ name: 'home' })
+        ).catch(error =>
+                $q.notify({
+                    message: `${i18n.t('failed_to_close_session')}: ${error}`,
+                    color: 'red',
+                })
+        )
     })
-    // TODO: Feedback-Messages
 }
 </script>

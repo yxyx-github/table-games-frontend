@@ -19,7 +19,6 @@ export const useSessionStore = defineStore('session', () => {
         const rawStoreValue = localStorage.getItem('session')
         if (rawStoreValue !== null) {
             session.value = JSON.parse(rawStoreValue)
-            console.log('loaded from storage:', session.value)
         }
     }
 
