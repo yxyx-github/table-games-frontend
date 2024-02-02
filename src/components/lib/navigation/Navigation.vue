@@ -1,9 +1,9 @@
 <template>
     <q-bar class="justify-between">
-        <div class="flex flex-row items-stretch justify-start">
+        <div class="flex flex-nowrap flex-row items-stretch justify-start">
             <slot name="start"/>
         </div>
-        <div class="flex flex-row items-stretch justify-end">
+        <div class="flex flex-nowrap flex-row items-stretch justify-end">
             <slot name="end"/>
         </div>
     </q-bar>
