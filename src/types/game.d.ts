@@ -1,5 +1,5 @@
 export enum GameName {
-    TicTacTow = 'TIC_TAC_TOE',
+    TicTacToe = 'TIC_TAC_TOE',
 }
 
 export type Game = {
