@@ -7,6 +7,7 @@ import {
 } from 'vue-router'
 
 import routes from './routes'
+import { useSessionStore } from '@/stores/session'
 
 /*
  * If not building with SSR mode, you can
@@ -22,7 +23,7 @@ export default route(function (/* { store, ssrContext } */) {
         ? createMemoryHistory
         : (process.env.VUE_ROUTER_MODE === 'history' ? createWebHistory : createWebHashHistory)
 
-    const Router = createRouter({
+    const router = createRouter({
         scrollBehavior: () => ({ left: 0, top: 0 }),
         routes,
 
@@ -32,5 +33,13 @@ export default route(function (/* { store, ssrContext } */) {
         history: createHistory(process.env.VUE_ROUTER_BASE),
     })
 
-    return Router
+    router.beforeEach((current) => {
+        const useSession = useSessionStore()
+        useSession.loadFromStorage()
+        if (useSession.session === null && current.name === 'session.current') {
+            return { name: 'home' }
+        }
+    })
+
+    return router
 })
