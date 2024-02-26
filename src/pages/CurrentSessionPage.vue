@@ -1,6 +1,8 @@
 <template>
-    Current Session Token: {{ useSession.session?.sessionToken }}
     <TicTacToe v-if="useSession.session?.game.name === GameName.TicTacToe"/>
+    <q-banner v-else class="rounded bg-warning">
+        {{ $t('game_not_implemented') }}
+    </q-banner>
 </template>
 
 <script setup lang="ts">
