@@ -1,6 +1,4 @@
-export enum GameName {
-    TicTacToe = 'TIC_TAC_TOE',
-}
+import { GameName } from '@/enums/gameName'
 
 export type Game = {
     name: GameName,
