@@ -7,7 +7,7 @@
 
 <script setup lang="ts">
 import { useSessionStore } from '@/stores/session'
-import TicTacToe from '@/components/app/session/current/TicTacToe.vue'
+import TicTacToe from '@/components/app/games/TicTacToe.vue'
 import { GameName } from '@/enums/gameName'
 
 const useSession = useSessionStore()
