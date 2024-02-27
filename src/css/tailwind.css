@@ -34,4 +34,8 @@
     h6 {
         @apply text-base font-bold
     }
+
+    .font-inherit {
+        font: inherit;
+    }
 }

@@ -7,8 +7,8 @@
 import GameField from '@/components/app/games/lib/GameField.vue'
 
 const fields = [
-        ['a', 'b', 'c'],
-        ['d', 'e', 'f'],
-        ['i', 'h', 'i'],
+        ['x', 'circle', ' '],
+        [' ', 'x', ' '],
+        ['circle', 'circle', 'x'],
 ]
 </script>
