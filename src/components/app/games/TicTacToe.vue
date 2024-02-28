@@ -1,6 +1,14 @@
 <template>
-    <button @click="useTicTacToe.loadState">TTT</button>
-    <GameField :fields="fields" :enableClick="true" :clickable="clickable" @click="onClick"/>
+    <div class="flex flex-col gap-2">
+        <button @click="useTicTacToe.loadState">TTT</button>
+        <q-banner v-if="hasTurn" class="rounded bg-positive">
+            {{ $t('its_your_turn') }}
+        </q-banner>
+        <q-banner v-else class="rounded bg-warning">
+            {{ $t('wait_for_action_of_other_player') }}
+        </q-banner>
+        <GameField :fields="fields" :enableClick="hasTurn" :clickable="clickable" @click="onClick"/>
+    </div>
 </template>
 
 <script setup lang="ts">
@@ -12,6 +20,8 @@ import { useAutoRefresh } from '@/composables/autoRefresh'
 
 const useSession = useSessionStore()
 const useTicTacToe = useTicTacToeStore()
+
+const hasTurn = computed(() => useSession.session?.user.id === useTicTacToe.state?.turn)
 
 const fields = computed<string[][]>(() =>
         useTicTacToe.state?.board.map(
