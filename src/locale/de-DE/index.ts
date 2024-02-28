@@ -15,10 +15,13 @@ const messages = {
     its_your_turn: 'Du bist am Zug.',
     join_session: 'Sitzung beitreten',
     leave_session: 'Sitzung verlassen',
+    no_winner: 'Es gibt keinen Gewinner',
     players: 'Spieler',
     session_token: 'Sitzungsschlüssel',
     username: 'Bentzername',
     wait_for_action_of_other_player: 'Warte auf Aktion von einem Mitspieler.',
+    you_won: 'Du hast gewonnen.',
+    you_lost: 'Du hast verloren.',
 }
 
 const numberFormats = {
