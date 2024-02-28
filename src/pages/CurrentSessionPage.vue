@@ -11,6 +11,4 @@ import TicTacToe from '@/components/app/games/TicTacToe.vue'
 import { GameName } from '@/enums/gameName'
 
 const useSession = useSessionStore()
-
-useSession.initSSE()
 </script>

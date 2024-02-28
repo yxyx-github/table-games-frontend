@@ -16,7 +16,6 @@ import GameField from '@/components/app/games/lib/GameField.vue'
 import { useTicTacToeStore } from '@/stores/games/ticTacToe'
 import { computed } from 'vue'
 import { useSessionStore } from '@/stores/session'
-import { useAutoRefresh } from '@/composables/autoRefresh'
 
 const useSession = useSessionStore()
 const useTicTacToe = useTicTacToeStore()
@@ -36,12 +35,6 @@ const fields = computed<string[][]>(() =>
         ?? []
 )
 
-/*const fields = [
-        ['x', 'circle', ' '],
-        [' ', 'x', ' '],
-        ['circle', 'circle', 'x'],
-]*/
-
 function clickable(item: string) {
     return item === ' '
 }
@@ -51,8 +44,6 @@ function onClick({ x, y }: { x: number, y: number }) {
             useTicTacToe.loadState()
     )
 }
-
-// useAutoRefresh(true, useTicTacToe.loadState, 3000)
 
 useSession.initSSE(() => {
     console.log('sse update')

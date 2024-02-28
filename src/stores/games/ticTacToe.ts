@@ -11,7 +11,6 @@ export const useTicTacToeStore = defineStore('tictactoe', () => {
 
     async function loadState() {
         return api.get<TicTacToeGame>(`/games/tictactoe/state?sessionToken=${useSession.session?.sessionToken}`).then(res => {
-            // console.log(res.data)
             state.value = res.data
         })
     }
@@ -24,8 +23,6 @@ export const useTicTacToeStore = defineStore('tictactoe', () => {
             // frontend requires y coordinate first for rendering, therefor actions have to swap coordinates in order to be consistent (mapping the board itself would be much harder)
             x: y,
             y: x,
-        }).then(res => {
-            console.log('action performed')
         })
     }
 
