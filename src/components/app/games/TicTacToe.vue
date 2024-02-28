@@ -47,18 +47,17 @@ function clickable(item: string) {
 }
 
 function onClick({ x, y }: { x: number, y: number }) {
-    console.log('clicked:', x, y)
     useTicTacToe.action(x, y).then(() =>
             useTicTacToe.loadState()
     )
 }
 
-useAutoRefresh(true, useTicTacToe.loadState, 3000)
+// useAutoRefresh(true, useTicTacToe.loadState, 3000)
 
-/*useSession.initSSE(() => {
+useSession.initSSE(() => {
     console.log('sse update')
     useTicTacToe.loadState()
 })
 
-useTicTacToe.loadState()*/
+useTicTacToe.loadState()
 </script>
