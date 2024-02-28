@@ -1,5 +1,5 @@
 import { defineStore } from 'pinia';
-import { api } from '@/boot/axios'
+import { api, baseURL } from '@/boot/axios'
 import { CreateSessionResponse, JoinSessionResponse, Session } from '@/types/session'
 import { computed, ref } from 'vue'
 import { Game } from '@/types/game'
@@ -14,6 +14,12 @@ export const useSessionStore = defineStore('session', () => {
             sessionData.value = value
         },
     })
+
+    const sse = ref<EventSource | null>(null)
+
+    function initSSE() {
+        sse.value = new EventSource(`${baseURL}/session/sse?sessionToken=${session.value?.sessionToken}&authToken=${session.value?.authToken}`)
+    }
 
     function loadFromStorage() {
         const rawStoreValue = localStorage.getItem('session')
@@ -71,6 +77,7 @@ export const useSessionStore = defineStore('session', () => {
 
     return {
         session,
+        initSSE,
         loadFromStorage,
         create,
         join,
