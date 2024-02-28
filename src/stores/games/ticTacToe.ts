@@ -11,7 +11,7 @@ export const useTicTacToeStore = defineStore('tictactoe', () => {
 
     async function loadState() {
         return api.get<TicTacToeGame>(`/games/tictactoe/state?sessionToken=${useSession.session?.sessionToken}`).then(res => {
-            console.log(res.data)
+            // console.log(res.data)
             state.value = res.data
         })
     }

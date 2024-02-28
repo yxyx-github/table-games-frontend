@@ -17,8 +17,9 @@ export const useSessionStore = defineStore('session', () => {
 
     const sse = ref<EventSource | null>(null)
 
-    function initSSE() {
+    function initSSE(handler: () => void) {
         sse.value = new EventSource(`${baseURL}/session/sse?sessionToken=${session.value?.sessionToken}&authToken=${session.value?.authToken}`)
+        sse.value.onmessage = handler
     }
 
     function loadFromStorage() {
