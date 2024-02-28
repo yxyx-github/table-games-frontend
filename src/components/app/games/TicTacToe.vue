@@ -1,6 +1,6 @@
 <template>
     TTT
-    <GameField :fields="fields" :enableClick="true" :clickable="clickable"/>
+    <GameField :fields="fields" :enableClick="true" :clickable="clickable" @click="onClick"/>
 </template>
 
 <script setup lang="ts">
@@ -14,5 +14,9 @@ const fields = [
 
 function clickable(item: string) {
     return item === ' '
+}
+
+function onClick({ x, y }: { x: number, y: number }) {
+    console.log('clicked:', x, y)
 }
 </script>

@@ -1,6 +1,7 @@
 <template>
     <component
             :is="props.enableClick ? h('button', { disabled: !isClickable }) : h('div')"
+            @click="props.enableClick && isClickable && emit('click')"
             class="aspect-square w-full p-1 focus:outline focus:outline-1 focus:outline-black text-black text-xl"
     >
         <slot/>
@@ -9,6 +10,8 @@
 
 <script setup lang="ts">
 import { computed, h } from 'vue'
+
+const emit = defineEmits(['click'])
 
 const props = withDefaults(defineProps<{
     enableClick?: boolean
