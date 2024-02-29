@@ -34,7 +34,11 @@ import { useTicTacToeStore } from '@/stores/games/ticTacToe'
 import { computed } from 'vue'
 import { useSessionStore } from '@/stores/session'
 import { TicTacToeGameState } from '@/enums/ticTacToeGameState'
+import { useQuasar } from 'quasar'
+import { useI18n } from 'vue-i18n'
 
+const $q = useQuasar()
+const i18n = useI18n()
 const useSession = useSessionStore()
 const useTicTacToe = useTicTacToeStore()
 
@@ -70,9 +74,19 @@ function onClick({ x, y }: { x: number, y: number }) {
 
 useSession.initSSE((msg: MessageEvent<string>) => {
     if (msg.data === 'TIC_TAC_TOE move happened') {
-        useTicTacToe.loadState()
+        useTicTacToe.loadState().catch(error =>
+                $q.notify({
+                    message: `${i18n.t('failed_to_load_game_state')}: ${error}`,
+                    color: 'red',
+                })
+        )
     }
 })
 
-useTicTacToe.loadState()
+useTicTacToe.loadState().catch(error =>
+        $q.notify({
+            message: `${i18n.t('failed_to_load_game_state')}: ${error}`,
+            color: 'red',
+        })
+)
 </script>

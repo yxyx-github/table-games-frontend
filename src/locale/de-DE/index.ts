@@ -10,6 +10,7 @@ const messages = {
     failed_to_create_session: 'Fehler beim Erstellen der Sitzung',
     failed_to_join_session: 'Fehler beim Beitreten der Sitzung',
     failed_to_load_game_list: 'Fehler beim Laden der Spieleliste',
+    failed_to_load_game_state: 'Fehler beim Laden des Spielstandes',
     game_not_implemented: 'Das Spiel ist nicht implementiert',
     home: 'Startseite',
     its_your_turn: 'Du bist am Zug.',
