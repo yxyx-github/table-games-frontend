@@ -1,11 +1,29 @@
 <template>
     Chess
-    <GameField :fields/>
+    <GameField :fields="board" v-slot="{ item, x, y }">
+        <Icon v-if="x !== 0 && x !== 9 && y !== 0 && y !== 9" :name="item"/>
+        <template v-else>
+            {{ item }}
+        </template>
+    </GameField>
     <!-- TODO: insert attribution for icons -->
 </template>
 
 <script setup lang="ts">
 import GameField from '@/components/app/games/lib/GameField.vue'
+import Icon from '@/components/lib/icons/Icon.vue'
+import { computed } from 'vue'
+
+const board = computed(() =>
+        [
+            ['', '1', '2', '3', '4', '5', '6', '7', '8', ''],
+            ...(fields.map((row, index) => {
+                const letter = String.fromCharCode((fields.length - 1 - index) + 65)
+                return [letter, ...row, letter]
+            })),
+            ['', '1', '2', '3', '4', '5', '6', '7', '8', ''],
+        ]
+)
 
 const fields = [
     [
