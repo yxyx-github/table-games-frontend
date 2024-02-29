@@ -21,11 +21,9 @@ const api = axios.create({
 })
 
 api.interceptors.request.use((config) => {
-    console.log('orig url:', config.url)
     if (config.url !== undefined) {
         config.url = encodeURI(config.url)
     }
-    console.log('enc url:', config.url)
     return config
 })
 

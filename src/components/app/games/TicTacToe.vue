@@ -68,9 +68,10 @@ function onClick({ x, y }: { x: number, y: number }) {
     )
 }
 
-useSession.initSSE(() => {
-    console.log('sse update')
-    useTicTacToe.loadState()
+useSession.initSSE((msg: MessageEvent<string>) => {
+    if (msg.data === 'TIC_TAC_TOE move happened') {
+        useTicTacToe.loadState()
+    }
 })
 
 useTicTacToe.loadState()
