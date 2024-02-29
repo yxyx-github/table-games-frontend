@@ -1,12 +1,21 @@
 <template>
-    Chess
-    <GameField :fields="board" v-slot="{ item, x, y }">
-        <Icon v-if="x !== 0 && x !== 9 && y !== 0 && y !== 9" :name="item"/>
-        <template v-else>
-            {{ item }}
-        </template>
-    </GameField>
-    <!-- TODO: insert attribution for icons -->
+    <div class="flex flex-col flex-nowrap items-stretch gap-2">
+        Chess
+        <div class="flex flex-row items-start">
+            <GameField :fields="board"
+                       v-slot="{ item, x, y }"
+                       enableClick
+                       :clickable="() => true"
+                       :itemClass="(_, x, y) => x !== 0 && x !== 9 && y !== 0 && y !== 9 && (x % 2 === 0 ^ y % 2 === 0) ? 'bg-gray-400' : 'bg-white'"
+            >
+                <Icon v-if="x !== 0 && x !== 9 && y !== 0 && y !== 9" :name="item"/>
+                <template v-else>
+                    {{ item }}
+                </template>
+            </GameField>
+        </div>
+        <!-- TODO: insert attribution for icons -->
+    </div>
 </template>
 
 <script setup lang="ts">

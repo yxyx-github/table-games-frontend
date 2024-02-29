@@ -1,5 +1,5 @@
 <template>
-    <div class="flex flex-col gap-2">
+    <div class="flex flex-col flex-nowrap items-stretch gap-2">
         <template v-if="isRunning">
             <q-banner v-if="hasTurn" class="rounded bg-primary text-white">
                 {{ $t('its_your_turn') }}
@@ -19,12 +19,14 @@
                 {{ $t('you_lost') }}
             </q-banner>
         </template>
-        <GameField
-                :fields="fields"
-                :enableClick="isRunning && hasTurn"
-                :clickable="clickable"
-                @click="onClick"
-        />
+        <div class="flex flex-row items-start">
+            <GameField
+                    :fields="fields"
+                    :enableClick="isRunning && hasTurn"
+                    :clickable="clickable"
+                    @click="onClick"
+            />
+        </div>
     </div>
 </template>
 
