@@ -6,6 +6,7 @@
             "@/*": [
                 "src/*"
             ]
-        }
+        },
+        "moduleResolution": "NodeNext"
     }
 }
