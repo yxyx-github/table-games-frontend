@@ -74,21 +74,20 @@ function onClick({ x, y }: { x: number, y: number }) {
     )
 }
 
+function updateGameState() {
+    useTicTacToe.loadState().catch(error =>
+            $q.notify({
+                message: `${i18n.t('failed_to_load_game_state')}: ${error}`,
+                color: 'red',
+            })
+    )
+}
+
 useSession.initSSE((msg: MessageEvent<string>) => {
     if (msg.data === 'TIC_TAC_TOE move happened') {
-        useTicTacToe.loadState().catch(error =>
-                $q.notify({
-                    message: `${i18n.t('failed_to_load_game_state')}: ${error}`,
-                    color: 'red',
-                })
-        )
+        updateGameState()
     }
 })
 
-useTicTacToe.loadState().catch(error =>
-        $q.notify({
-            message: `${i18n.t('failed_to_load_game_state')}: ${error}`,
-            color: 'red',
-        })
-)
+updateGameState()
 </script>

@@ -23,10 +23,13 @@ import GameField from '@/components/app/games/lib/GameField.vue'
 import Icon from '@/components/lib/icons/Icon.vue'
 import { computed } from 'vue'
 import { useChessStore } from '@/stores/games/chess'
-import { ChessGame } from '@/types/games/chess'
 import { ChessPiece } from '@/enums/chessPiece'
 import { useSessionStore } from '@/stores/session'
+import { useQuasar } from 'quasar'
+import { useI18n } from 'vue-i18n'
 
+const $q = useQuasar()
+const i18n = useI18n()
 const useSession = useSessionStore()
 const useChess = useChessStore()
 
@@ -47,54 +50,6 @@ const board = computed<string[][]>(() => useChess.state === null ? [] :
 const reversedBoard = computed<string[][]>(() => board.value.toReversed().map(row => row.toReversed()))
 
 const usedBoard = computed<string[][]>(() => useSession.session?.user.host ? reversedBoard.value : board.value)
-
-/*const fields = [
-    [
-        'chess-rook-d',
-        'chess-knight-d',
-        'chess-bishop-d',
-        'chess-queen-d',
-        'chess-king-d',
-        'chess-bishop-d',
-        'chess-knight-d',
-        'chess-rook-d',
-    ], [
-        'chess-pawn-d',
-        'chess-pawn-d',
-        'chess-pawn-d',
-        'chess-pawn-d',
-        'chess-pawn-d',
-        'chess-pawn-d',
-        'chess-pawn-d',
-        'chess-pawn-d',
-    ], [
-        ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ',
-    ], [
-        ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ',
-    ], [
-        ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ',
-    ], [
-        ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ',
-    ], [
-        'chess-pawn-l',
-        'chess-pawn-l',
-        'chess-pawn-l',
-        'chess-pawn-l',
-        'chess-pawn-l',
-        'chess-pawn-l',
-        'chess-pawn-l',
-        'chess-pawn-l',
-    ], [
-        'chess-rook-l',
-        'chess-knight-l',
-        'chess-bishop-l',
-        'chess-queen-l',
-        'chess-king-l',
-        'chess-bishop-l',
-        'chess-knight-l',
-        'chess-rook-l',
-    ],
-]*/
 
 function chessPieceToIconName(piece: ChessPiece): string {
     switch (piece) {
@@ -125,5 +80,22 @@ function chessPieceToIconName(piece: ChessPiece): string {
     }
 }
 
-useChess.loadState()
+function updateGameState() {
+    useChess.loadState().catch(error =>
+            $q.notify({
+                message: `${i18n.t('failed_to_load_game_state')}: ${error}`,
+                color: 'red',
+            })
+    )
+}
+
+useSession.initSSE((msg: MessageEvent<string>) => {
+    console.log('sse:', msg)
+    if (msg.data === 'CHESS move happened') {
+
+    }
+    updateGameState()
+})
+
+updateGameState()
 </script>
