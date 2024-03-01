@@ -6,7 +6,8 @@
                        v-slot="{ item, x, y }"
                        enableClick
                        :clickable="() => true"
-                       :itemClass="(_, x, y) => x !== 0 && x !== 9 && y !== 0 && y !== 9 && (x % 2 === 0 ^ y % 2 === 0) ? 'bg-gray-400' : 'bg-white'"
+                       @click="onClick"
+                       :itemClass="itemClass"
             >
                 <Icon v-if="x !== 0 && x !== 9 && y !== 0 && y !== 9" :name="item"/>
                 <template v-else>
@@ -21,7 +22,7 @@
 <script setup lang="ts">
 import GameField from '@/components/app/games/lib/GameField.vue'
 import Icon from '@/components/lib/icons/Icon.vue'
-import { computed } from 'vue'
+import { computed, ref } from 'vue'
 import { useChessStore } from '@/stores/games/chess'
 import { ChessPiece } from '@/enums/chessPiece'
 import { useSessionStore } from '@/stores/session'
@@ -50,6 +51,33 @@ const board = computed<string[][]>(() => useChess.state === null ? [] :
 const reversedBoard = computed<string[][]>(() => board.value.toReversed().map(row => row.toReversed()))
 
 const usedBoard = computed<string[][]>(() => useSession.session?.user.host ? reversedBoard.value : board.value)
+
+const selectedField = ref<{ x: number, y: number } | null>(null)
+
+function onClick(field: { x: number, y: number }) {
+    if (selectedField.value === null) {
+        selectedField.value = field
+    } else {
+        console.log('move:', selectedField.value, '->', field)
+        selectedField.value = null
+    }
+}
+
+function itemClass(item: string, x: number, y: number) {
+    if (selectedField.value?.x === x && selectedField.value?.y === y) {
+        return 'bg-yellow-400'
+    } else if (
+            x !== 0 && x !== 9 && y !== 0 && y !== 9
+            && (
+                    + (x % 2 === 0)
+                    ^ + (y % 2 === 0)
+            )
+    ) {
+        return 'bg-gray-400'
+    } else {
+        return 'bg-white'
+    }
+}
 
 function chessPieceToIconName(piece: ChessPiece): string {
     switch (piece) {
@@ -92,7 +120,7 @@ function updateGameState() {
 useSession.initSSE((msg: MessageEvent<string>) => {
     console.log('sse:', msg)
     if (msg.data === 'CHESS move happened') {
-
+        // TODO: check msg
     }
     updateGameState()
 })
