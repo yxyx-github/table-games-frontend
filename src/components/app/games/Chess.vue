@@ -46,8 +46,8 @@ import { ChessPiece } from '@/enums/chessPiece'
 import { useSessionStore } from '@/stores/session'
 import { useQuasar } from 'quasar'
 import { useI18n } from 'vue-i18n'
-import { TicTacToeGameState } from '@/enums/ticTacToeGameState'
 import { ChessGameState } from '@/enums/chessGameState'
+import { ChessPieceType } from '@/enums/chessPieceType'
 
 const $q = useQuasar()
 const i18n = useI18n()
@@ -88,23 +88,67 @@ function clickable(item: string, x: number, y: number) {
     return ![0, 9].includes(x) && ![0, 9].includes(y)
 }
 
+const chessPieceTypeOptions = [
+    // { value: ChessPieceType.KING, label: ChessPieceType.KING.toString() },
+    { value: ChessPieceType.QUEEN, label: ChessPieceType.QUEEN.toString() },
+    { value: ChessPieceType.BISHOP, label: ChessPieceType.BISHOP.toString() },
+    { value: ChessPieceType.KNIGHT, label: ChessPieceType.KNIGHT.toString() },
+    { value: ChessPieceType.ROOK, label: ChessPieceType.ROOK.toString() },
+    // { value: ChessPieceType.PAWN, label: ChessPieceType.PAWN.toString() },
+]
+
+// TODO: display error messages
 function onClick(field: { x: number, y: number }) {
     if (selectedField.value === null) {
         selectedField.value = field
     } else {
         console.log('move:', selectedField.value, '->', field)
-        if (enableReversedBoard.value) {
-            useChess.move(8 - selectedField.value.x,
-                    8 - selectedField.value.y,
-                    8 - field.x,
-                    8 - field.y,
-            )
+        const selected = JSON.parse(JSON.stringify(selectedField.value))
+
+        if (field.y === 1 && usedBoard.value[selected.y][selected.x].includes('pawn')) {
+            $q.dialog({
+                title: i18n.t('promote'),
+                message: i18n.t('choose_piece_to_promote'),
+                options: {
+                    type: 'radio',
+                    model: ChessPieceType.QUEEN,
+                    items: chessPieceTypeOptions,
+                }
+            }).onOk(data => {
+                if (enableReversedBoard.value) {
+                    useChess.move(
+                            8 - selected.x,
+                            8 - selected.y,
+                            8 - field.x,
+                            8 - field.y,
+                            data,
+                    )
+                } else {
+                    useChess.move(
+                            selected.x - 1,
+                            selected.y - 1,
+                            field.x - 1,
+                            field.y - 1,
+                            data,
+                    )
+                }
+            })
         } else {
-            useChess.move(selectedField.value.x - 1,
-                    selectedField.value.y - 1,
-                    field.x - 1,
-                    field.y - 1,
-            )
+            if (enableReversedBoard.value) {
+                useChess.move(
+                        8 - selected.x,
+                        8 - selected.y,
+                        8 - field.x,
+                        8 - field.y,
+                )
+            } else {
+                useChess.move(
+                        selected.x - 1,
+                        selected.y - 1,
+                        field.x - 1,
+                        field.y - 1,
+                )
+            }
         }
         selectedField.value = null
     }

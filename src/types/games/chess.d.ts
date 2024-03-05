@@ -18,7 +18,7 @@ export type ChessGameMoveAction = GameAction | {
 }
 
 export type ChessGamePromoteAction = ChessGameMoveAction | {
-    promote: ChessPieceType
+    promoteTo: ChessPieceType
 }
 
 export type ChessGameCastleAction = GameAction | {

@@ -1,4 +1,5 @@
 const messages = {
+    choose_piece_to_promote: 'Wähle ein Teil zum Befördern aus.',
     click_to_copy: 'Klicke zum Kopieren',
     close_session: 'Sitzung beenden',
     close_session_confirm_message: 'Möchtest du die Sitzung wirklich beenden?',
@@ -18,6 +19,7 @@ const messages = {
     leave_session: 'Sitzung verlassen',
     no_winner: 'Es gibt keinen Gewinner',
     players: 'Spieler',
+    promote: 'Befördern',
     session_token: 'Sitzungsschlüssel',
     username: 'Bentzername',
     wait_for_action_of_other_player: 'Warte auf Aktion von einem Mitspieler.',
