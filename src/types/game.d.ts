@@ -9,3 +9,9 @@ export type Game = {
 export type GamesGeneralListResponse = {
     games: Game[],
 }
+
+export type GameAction = {
+    sessionToken: string
+    authToken: string
+    userId: number
+}
