@@ -5,7 +5,7 @@
             <GameField :fields="usedBoard"
                        v-slot="{ item, x, y }"
                        enableClick
-                       :clickable="() => true"
+                       :clickable="clickable"
                        @click="onClick"
                        :itemClass="itemClass"
             >
@@ -36,7 +36,7 @@ const useChess = useChessStore()
 
 const board = computed<string[][]>(() => useChess.state === null ? [] :
         [
-            ['', 'H', 'G', 'F', 'E', 'D', 'C', 'B', 'A', ''],
+            [' ', 'H', 'G', 'F', 'E', 'D', 'C', 'B', 'A', ' '],
             ...(useChess.state.board.map((row, index) => [
                     `${ index + 1 }`,
                     ...(row.map(field =>
@@ -45,7 +45,7 @@ const board = computed<string[][]>(() => useChess.state === null ? [] :
                     `${ index + 1 }`,
                 ]
             )),
-            ['', 'H', 'G', 'F', 'E', 'D', 'C', 'B', 'A', ''],
+            [' ', 'H', 'G', 'F', 'E', 'D', 'C', 'B', 'A', ' '],
         ]
 )
 const reversedBoard = computed<string[][]>(() => board.value.toReversed().map(row => row.toReversed()))
@@ -53,6 +53,10 @@ const reversedBoard = computed<string[][]>(() => board.value.toReversed().map(ro
 const usedBoard = computed<string[][]>(() => useSession.session?.user.host ? reversedBoard.value : board.value)
 
 const selectedField = ref<{ x: number, y: number } | null>(null)
+
+function clickable(item: string, x: number, y: number) {
+    return ![0, 9].includes(x) && ![0, 9].includes(y)
+}
 
 function onClick(field: { x: number, y: number }) {
     if (selectedField.value === null) {
