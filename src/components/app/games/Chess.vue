@@ -99,6 +99,8 @@ const chessPieceTypeOptions = [
 function onClick(field: { x: number, y: number }) {
     if (selectedField.value === null) {
         selectedField.value = field
+    } else if (selectedField.value.x === field.x && selectedField.value.y === field.y) {
+        selectedField.value = null
     } else {
         console.log('move:', selectedField.value, '->', field)
         const selected = JSON.parse(JSON.stringify(selectedField.value))
