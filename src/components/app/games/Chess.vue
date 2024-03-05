@@ -72,7 +72,7 @@ const board = computed<string[][]>(() => useChess.state === null ? [] :
                             field === null ? ' ' : chessPieceToIconName(field)
                     )),
                     `${ index + 1 }`,
-                ]
+                ].toReversed()
             )),
             [' ', 'H', 'G', 'F', 'E', 'D', 'C', 'B', 'A', ' '],
         ]
@@ -115,17 +115,17 @@ function onClick(field: { x: number, y: number }) {
             }).onOk(promoteTo => {
                 if (enableReversedBoard.value) {
                     useChess.move(
-                            8 - selected.x,
+                            selected.x - 1,
                             8 - selected.y,
-                            8 - field.x,
+                            field.x - 1,
                             8 - field.y,
                             promoteTo,
                     )
                 } else {
                     useChess.move(
-                            selected.x - 1,
+                            8 - selected.x,
                             selected.y - 1,
-                            field.x - 1,
+                            8 - field.x,
                             field.y - 1,
                             promoteTo,
                     )
@@ -134,16 +134,16 @@ function onClick(field: { x: number, y: number }) {
         } else {
             if (enableReversedBoard.value) {
                 useChess.move(
-                        8 - selected.x,
+                        selected.x - 1,
                         8 - selected.y,
-                        8 - field.x,
+                        field.x - 1,
                         8 - field.y,
                 )
             } else {
                 useChess.move(
-                        selected.x - 1,
+                        8 - selected.x,
                         selected.y - 1,
-                        field.x - 1,
+                        8 - field.x,
                         field.y - 1,
                 )
             }
