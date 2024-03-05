@@ -1,6 +1,24 @@
 <template>
     <div class="flex flex-col flex-nowrap items-stretch gap-2">
-        Chess
+        <template v-if="isRunning">
+            <q-banner v-if="hasTurn" class="rounded bg-primary text-white">
+                {{ $t('its_your_turn') }}
+            </q-banner>
+            <q-banner v-else class="rounded bg-info text-white">
+                {{ $t('wait_for_action_of_other_player') }}
+            </q-banner>
+        </template>
+        <q-banner v-else-if="isDraw" class="rounded bg-warning text-white">
+            {{ $t('no_winner') }}
+        </q-banner>
+        <template v-else-if="isDecided">
+            <q-banner v-if="hasWon" class="rounded bg-positive text-white">
+                {{ $t('you_won') }}
+            </q-banner>
+            <q-banner v-else class="rounded bg-negative text-white">
+                {{ $t('you_lost') }}
+            </q-banner>
+        </template>
         <div class="flex flex-row items-start">
             <GameField :fields="usedBoard"
                        v-slot="{ item, x, y }"
@@ -28,11 +46,22 @@ import { ChessPiece } from '@/enums/chessPiece'
 import { useSessionStore } from '@/stores/session'
 import { useQuasar } from 'quasar'
 import { useI18n } from 'vue-i18n'
+import { TicTacToeGameState } from '@/enums/ticTacToeGameState'
+import { ChessGameState } from '@/enums/chessGameState'
 
 const $q = useQuasar()
 const i18n = useI18n()
 const useSession = useSessionStore()
 const useChess = useChessStore()
+
+// TODO: refactor
+const hasWon = computed(() => useSession.session?.user.id === useChess.state?.winner)
+const hasTurn = computed(() => useSession.session?.user.id === useChess.state?.turn)
+
+// TODO: refactor
+const isRunning = computed(() => useChess.state?.state === ChessGameState.RUNNING)
+const isDraw = computed(() => useChess.state?.state === ChessGameState.DRAW)
+const isDecided = computed(() => useChess.state?.state === ChessGameState.DECIDED)
 
 const board = computed<string[][]>(() => useChess.state === null ? [] :
         [
@@ -50,7 +79,8 @@ const board = computed<string[][]>(() => useChess.state === null ? [] :
 )
 const reversedBoard = computed<string[][]>(() => board.value.toReversed().map(row => row.toReversed()))
 
-const usedBoard = computed<string[][]>(() => useSession.session?.user.host ? reversedBoard.value : board.value)
+const enableReversedBoard = computed<boolean>(() => useSession.session?.user.host ?? false)
+const usedBoard = computed<string[][]>(() => enableReversedBoard.value ? reversedBoard.value : board.value)
 
 const selectedField = ref<{ x: number, y: number } | null>(null)
 
@@ -63,6 +93,19 @@ function onClick(field: { x: number, y: number }) {
         selectedField.value = field
     } else {
         console.log('move:', selectedField.value, '->', field)
+        if (enableReversedBoard.value) {
+            useChess.move(8 - selectedField.value.x,
+                    8 - selectedField.value.y,
+                    8 - field.x,
+                    8 - field.y,
+            )
+        } else {
+            useChess.move(selectedField.value.x - 1,
+                    selectedField.value.y - 1,
+                    field.x - 1,
+                    field.y - 1,
+            )
+        }
         selectedField.value = null
     }
 }

@@ -2,7 +2,7 @@ import { defineStore } from 'pinia';
 import { api } from '@/boot/axios'
 import { ref } from 'vue'
 import { useSessionStore } from '@/stores/session'
-import { ChessGame } from '@/types/games/chess'
+import { ChessGame, ChessGameMoveAction } from '@/types/games/chess'
 
 export const useChessStore = defineStore('chess', () => {
     const useSession = useSessionStore()
@@ -15,8 +15,21 @@ export const useChessStore = defineStore('chess', () => {
         })
     }
 
+    async function move(fromX: number, fromY: number, toX: number, toY: number) {
+        return api.post<ChessGameMoveAction, void>('/games/chess/move', {
+            sessionToken: useSession.session?.sessionToken,
+            authToken: useSession.session?.authToken,
+            userId: useSession.session?.user.id,
+            fromX,
+            fromY,
+            toX,
+            toY,
+        })
+    }
+
     return {
         state,
         loadState,
+        move,
     }
 })

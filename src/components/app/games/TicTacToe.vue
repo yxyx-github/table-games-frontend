@@ -44,9 +44,11 @@ const i18n = useI18n()
 const useSession = useSessionStore()
 const useTicTacToe = useTicTacToeStore()
 
+// TODO: refactor
 const hasWon = computed(() => useSession.session?.user.id === useTicTacToe.state?.winner)
 const hasTurn = computed(() => useSession.session?.user.id === useTicTacToe.state?.turn)
 
+// TODO: refactor
 const isRunning = computed(() => useTicTacToe.state?.state === TicTacToeGameState.RUNNING)
 const isDraw = computed(() => useTicTacToe.state?.state === TicTacToeGameState.DRAW)
 const isDecided = computed(() => useTicTacToe.state?.state === TicTacToeGameState.DECIDED)
