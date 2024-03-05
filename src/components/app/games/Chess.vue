@@ -89,12 +89,10 @@ function clickable(item: string, x: number, y: number) {
 }
 
 const chessPieceTypeOptions = [
-    // { value: ChessPieceType.KING, label: ChessPieceType.KING.toString() },
     { value: ChessPieceType.QUEEN, label: ChessPieceType.QUEEN.toString() },
     { value: ChessPieceType.BISHOP, label: ChessPieceType.BISHOP.toString() },
     { value: ChessPieceType.KNIGHT, label: ChessPieceType.KNIGHT.toString() },
     { value: ChessPieceType.ROOK, label: ChessPieceType.ROOK.toString() },
-    // { value: ChessPieceType.PAWN, label: ChessPieceType.PAWN.toString() },
 ]
 
 // TODO: display error messages
@@ -114,14 +112,14 @@ function onClick(field: { x: number, y: number }) {
                     model: ChessPieceType.QUEEN,
                     items: chessPieceTypeOptions,
                 }
-            }).onOk(data => {
+            }).onOk(promoteTo => {
                 if (enableReversedBoard.value) {
                     useChess.move(
                             8 - selected.x,
                             8 - selected.y,
                             8 - field.x,
                             8 - field.y,
-                            data,
+                            promoteTo,
                     )
                 } else {
                     useChess.move(
@@ -129,7 +127,7 @@ function onClick(field: { x: number, y: number }) {
                             selected.y - 1,
                             field.x - 1,
                             field.y - 1,
-                            data,
+                            promoteTo,
                     )
                 }
             })
