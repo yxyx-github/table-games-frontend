@@ -2,7 +2,7 @@ import { defineStore } from 'pinia';
 import { api } from '@/boot/axios'
 import { ref } from 'vue'
 import { useSessionStore } from '@/stores/session'
-import { ChessGame, ChessGameMoveAction, ChessGamePromoteAction } from '@/types/games/chess'
+import { ChessGame, ChessGameCastleAction, ChessGameMoveAction, ChessGamePromoteAction } from '@/types/games/chess'
 import { ChessPieceType } from '@/enums/chessPieceType'
 
 export const useChessStore = defineStore('chess', () => {
@@ -29,9 +29,19 @@ export const useChessStore = defineStore('chess', () => {
         })
     }
 
+    async function castle(kingside: boolean) {
+        return api.post<ChessGameCastleAction, void>('/games/chess/castle', {
+            sessionToken: useSession.session?.sessionToken,
+            authToken: useSession.session?.authToken,
+            userId: useSession.session?.user.id,
+            kingside,
+        })
+    }
+
     return {
         state,
         loadState,
         move,
+        castle,
     }
 })

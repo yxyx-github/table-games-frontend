@@ -105,7 +105,18 @@ function onClick(field: { x: number, y: number }) {
         console.log('move:', selectedField.value, '->', field)
         const selected = JSON.parse(JSON.stringify(selectedField.value))
 
-        if (field.y === 1 && usedBoard.value[selected.y][selected.x].includes('pawn')) {
+        if (
+                field.y === 8
+                && usedBoard.value[selected.y][selected.x].includes('king')
+                && usedBoard.value[field.y][field.x].includes('rook')
+        ) {
+            // TODO: castle
+            useChess.castle(
+                    Boolean(
+                            + (selected.x < 5) ^ + (field.x >= 5)
+                    )
+            ) // TODO: handle error
+        } else if (field.y === 1 && usedBoard.value[selected.y][selected.x].includes('pawn')) {
             $q.dialog({
                 title: i18n.t('promote'),
                 message: i18n.t('choose_piece_to_promote'),
@@ -122,7 +133,7 @@ function onClick(field: { x: number, y: number }) {
                             field.x - 1,
                             8 - field.y,
                             promoteTo,
-                    )
+                    ) // TODO: handle error
                 } else {
                     useChess.move(
                             8 - selected.x,
@@ -130,7 +141,7 @@ function onClick(field: { x: number, y: number }) {
                             8 - field.x,
                             field.y - 1,
                             promoteTo,
-                    )
+                    ) // TODO: handle error
                 }
             })
         } else {
@@ -140,14 +151,14 @@ function onClick(field: { x: number, y: number }) {
                         8 - selected.y,
                         field.x - 1,
                         8 - field.y,
-                )
+                ) // TODO: handle error
             } else {
                 useChess.move(
                         8 - selected.x,
                         selected.y - 1,
                         8 - field.x,
                         field.y - 1,
-                )
+                ) // TODO: handle error
             }
         }
         selectedField.value = null
