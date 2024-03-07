@@ -33,7 +33,7 @@
                 </template>
             </GameField>
         </div>
-        <!-- TODO: insert attribution for icons -->
+        <ChessIconAttributions/>
     </div>
 </template>
 
@@ -48,6 +48,7 @@ import { useQuasar } from 'quasar'
 import { useI18n } from 'vue-i18n'
 import { ChessGameState } from '@/enums/chessGameState'
 import { ChessPieceType } from '@/enums/chessPieceType'
+import ChessIconAttributions from '@/components/app/games/chess/ChessIconAttributions.vue'
 
 const $q = useQuasar()
 const i18n = useI18n()
