@@ -1,24 +1,12 @@
 <template>
     <div class="flex flex-col flex-nowrap items-stretch gap-2">
-        <template v-if="isRunning">
-            <q-banner v-if="hasTurn" class="rounded bg-primary text-white">
-                {{ $t('its_your_turn') }}
-            </q-banner>
-            <q-banner v-else class="rounded bg-info text-white">
-                {{ $t('wait_for_action_of_other_player') }}
-            </q-banner>
-        </template>
-        <q-banner v-else-if="isDraw" class="rounded bg-warning text-white">
-            {{ $t('no_winner') }}
-        </q-banner>
-        <template v-else-if="isDecided">
-            <q-banner v-if="hasWon" class="rounded bg-positive text-white">
-                {{ $t('you_won') }}
-            </q-banner>
-            <q-banner v-else class="rounded bg-negative text-white">
-                {{ $t('you_lost') }}
-            </q-banner>
-        </template>
+        <SimpleGameStateView
+                v-if="useChess.state !== null && useSession.session !== null"
+                :state="useChess.state.state"
+                :winner="useChess.state.winner"
+                :turn="useChess.state.turn"
+                :userId="useSession.session.user.id"
+        />
         <div class="flex flex-row items-start">
             <GameField :fields="usedBoard"
                        v-slot="{ item, x, y }"
@@ -46,23 +34,14 @@ import { ChessPiece } from '@/enums/chessPiece'
 import { useSessionStore } from '@/stores/session'
 import { useQuasar } from 'quasar'
 import { useI18n } from 'vue-i18n'
-import { ChessGameState } from '@/enums/chessGameState'
 import { ChessPieceType } from '@/enums/chessPieceType'
 import ChessIconAttributions from '@/components/app/games/chess/ChessIconAttributions.vue'
+import SimpleGameStateView from '@/components/app/games/lib/SimpleGameStateView.vue'
 
 const $q = useQuasar()
 const i18n = useI18n()
 const useSession = useSessionStore()
 const useChess = useChessStore()
-
-// TODO: refactor
-const hasWon = computed(() => useSession.session?.user.id === useChess.state?.winner)
-const hasTurn = computed(() => useSession.session?.user.id === useChess.state?.turn)
-
-// TODO: refactor
-const isRunning = computed(() => useChess.state?.state === ChessGameState.RUNNING)
-const isDraw = computed(() => useChess.state?.state === ChessGameState.DRAW)
-const isDecided = computed(() => useChess.state?.state === ChessGameState.DECIDED)
 
 const board = computed<string[][]>(() => useChess.state === null ? [] :
         [

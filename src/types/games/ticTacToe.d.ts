@@ -1,10 +1,10 @@
-import { TicTacToeGameState } from '@/enums/ticTacToeGameState'
 import { GameAction } from '@/types/game'
+import { SimpleGameState } from '@/enums/simpleGameState'
 
 export type TicTacToeGame = {
     board: number[][]
     turn: number
-    state: TicTacToeGameState
+    state: SimpleGameState
     winner: number | null
 }
 

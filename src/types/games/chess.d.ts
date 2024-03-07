@@ -1,12 +1,12 @@
 import { ChessPiece } from '@/enums/chessPiece'
-import { ChessGameState } from '@/enums/chessGameState'
 import { GameAction } from '@/types/game'
 import { ChessPieceType } from '@/enums/chessPieceType'
+import { SimpleGameState } from '@/enums/simpleGameState'
 
 export type ChessGame = {
     board: (ChessPiece | null)[][]
     turn: number
-    state: ChessGameState
+    state: SimpleGameState
     winner: number | null
 }
 
