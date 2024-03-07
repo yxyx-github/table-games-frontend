@@ -95,14 +95,12 @@ const chessPieceTypeOptions = [
     { value: ChessPieceType.ROOK, label: ChessPieceType.ROOK.toString() },
 ]
 
-// TODO: display error messages
 function onClick(field: { x: number, y: number }) {
     if (selectedField.value === null) {
         selectedField.value = field
     } else if (selectedField.value.x === field.x && selectedField.value.y === field.y) {
         selectedField.value = null
     } else {
-        console.log('move:', selectedField.value, '->', field)
         const selected = JSON.parse(JSON.stringify(selectedField.value))
 
         if (
@@ -110,12 +108,16 @@ function onClick(field: { x: number, y: number }) {
                 && usedBoard.value[selected.y][selected.x].includes('king')
                 && usedBoard.value[field.y][field.x].includes('rook')
         ) {
-            // TODO: castle
             useChess.castle(
                     Boolean(
                             + (selected.x < 5) ^ + (field.x >= 5)
                     )
-            ) // TODO: handle error
+            ).catch(error =>
+                    $q.notify({
+                        message: `${i18n.t('failed_to_castle')}: ${error}`,
+                        color: 'red',
+                    })
+            )
         } else if (field.y === 1 && usedBoard.value[selected.y][selected.x].includes('pawn')) {
             $q.dialog({
                 title: i18n.t('promote'),
@@ -133,7 +135,12 @@ function onClick(field: { x: number, y: number }) {
                             field.x - 1,
                             8 - field.y,
                             promoteTo,
-                    ) // TODO: handle error
+                    ).catch(error =>
+                            $q.notify({
+                                message: `${i18n.t('failed_to_promote')}: ${error}`,
+                                color: 'red',
+                            })
+                    )
                 } else {
                     useChess.move(
                             8 - selected.x,
@@ -141,7 +148,12 @@ function onClick(field: { x: number, y: number }) {
                             8 - field.x,
                             field.y - 1,
                             promoteTo,
-                    ) // TODO: handle error
+                    ).catch(error =>
+                            $q.notify({
+                                message: `${i18n.t('failed_to_promote')}: ${error}`,
+                                color: 'red',
+                            })
+                    )
                 }
             })
         } else {
@@ -151,14 +163,24 @@ function onClick(field: { x: number, y: number }) {
                         8 - selected.y,
                         field.x - 1,
                         8 - field.y,
-                ) // TODO: handle error
+                ).catch(error =>
+                        $q.notify({
+                            message: `${i18n.t('failed_to_move')}: ${error}`,
+                            color: 'red',
+                        })
+                )
             } else {
                 useChess.move(
                         8 - selected.x,
                         selected.y - 1,
                         8 - field.x,
                         field.y - 1,
-                ) // TODO: handle error
+                ).catch(error =>
+                        $q.notify({
+                            message: `${i18n.t('failed_to_move')}: ${error}`,
+                            color: 'red',
+                        })
+                )
             }
         }
         selectedField.value = null
@@ -220,11 +242,9 @@ function updateGameState() {
 }
 
 useSession.initSSE((msg: MessageEvent<string>) => {
-    console.log('sse:', msg)
-    if (msg.data === 'CHESS move happened') {
-        // TODO: check msg
+    if (['A piece has moved.', 'A piece has been promoted.', 'A piece has been castled.'].includes(msg.data)) {
+        updateGameState()
     }
-    updateGameState()
 })
 
 updateGameState()
