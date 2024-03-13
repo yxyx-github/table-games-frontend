@@ -10,12 +10,19 @@ const messages = {
     failed_to_create_session: 'Fehler beim Erstellen der Sitzung',
     failed_to_join_session: 'Fehler beim Beitreten der Sitzung',
     failed_to_load_game_list: 'Fehler beim Laden der Spieleliste',
+    failed_to_load_game_state: 'Fehler beim Laden des Spielstandes',
+    game_not_implemented: 'Das Spiel ist nicht implementiert',
     home: 'Startseite',
+    its_your_turn: 'Du bist am Zug.',
     join_session: 'Sitzung beitreten',
     leave_session: 'Sitzung verlassen',
+    no_winner: 'Es gibt keinen Gewinner',
     players: 'Spieler',
     session_token: 'Sitzungsschlüssel',
     username: 'Bentzername',
+    wait_for_action_of_other_player: 'Warte auf Aktion von einem Mitspieler.',
+    you_won: 'Du hast gewonnen.',
+    you_lost: 'Du hast verloren.',
 }
 
 const numberFormats = {
