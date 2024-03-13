@@ -1,16 +1,14 @@
-import { TicTacToeGameState } from '@/enums/ticTacToeGameState'
+import { GameAction } from '@/types/game'
+import { SimpleGameState } from '@/enums/simpleGameState'
 
 export type TicTacToeGame = {
     board: number[][]
     turn: number
-    state: TicTacToeGameState
+    state: SimpleGameState
     winner: number | null
 }
 
-export type TicTacToeGameAction = {
-    sessionToken: string
-    authToken: string
-    userId: number
+export type TicTacToeGameAction = GameAction | {
     x: number
     y: number
 }

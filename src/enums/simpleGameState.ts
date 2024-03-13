@@ -1,4 +1,4 @@
-export enum TicTacToeGameState {
+export enum SimpleGameState {
     RUNNING = 'RUNNING',
     DRAW = 'DRAW',
     DECIDED = 'DECIDED',

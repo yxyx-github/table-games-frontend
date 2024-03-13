@@ -2,7 +2,7 @@
     <component
             :is="props.enableClick ? h('button', { disabled: !isClickable }) : h('div')"
             @click="props.enableClick && isClickable && emit('click')"
-            class="aspect-square w-full p-1 focus:outline focus:outline-1 focus:outline-black text-black text-xl"
+            class="grow p-1 focus:outline focus:outline-1 focus:outline-black text-black disabled:text-black text-xl"
     >
         <slot/>
     </component>
