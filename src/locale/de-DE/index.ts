@@ -7,7 +7,7 @@ const messages = {
     create_new_session: 'Neue Sitzung erstellen',
     create_session: 'Sitzung erstellen',
     current_session: 'Aktuelle Sitzung',
-    failed_to_castle: 'Fehler beim Rochhieren',
+    failed_to_castle: 'Fehler beim Rochieren',
     failed_to_close_session: 'Fehler beim Beenden der Sitzung',
     failed_to_create_session: 'Fehler beim Erstellen der Sitzung',
     failed_to_join_session: 'Fehler beim Beitreten der Sitzung',
