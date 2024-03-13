@@ -1,7 +1,6 @@
 <template>
-    <div class="flex flex-col flex-nowrap items-stretch gap-2">
+    <div v-if="useChess.state !== null && useSession.session !== null" class="flex flex-col flex-nowrap items-stretch gap-2">
         <SimpleGameStateView
-                v-if="useChess.state !== null && useSession.session !== null"
                 :state="useChess.state.state"
                 :winner="useChess.state.winner"
                 :turn="useChess.state.turn"
