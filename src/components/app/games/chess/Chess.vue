@@ -12,7 +12,7 @@
                        enableClick
                        :clickable="clickable"
                        @click="onClick"
-                       :itemClass="itemClass"
+                       :itemClass="(item, x, y) => `${itemClass(item, x, y)} text-[8vw]`"
             >
                 <Icon v-if="x !== 0 && x !== 9 && y !== 0 && y !== 9" :name="item"/>
                 <template v-else>
