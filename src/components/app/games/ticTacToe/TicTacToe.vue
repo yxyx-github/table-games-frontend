@@ -12,6 +12,7 @@
                     :fields="fields"
                     :enableClick="isRunning && hasTurn"
                     :clickable="clickable"
+                    :itemClass="() => 'text-[32vw]'"
                     @click="onClick"
             />
         </div>

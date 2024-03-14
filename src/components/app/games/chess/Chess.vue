@@ -1,7 +1,6 @@
 <template>
-    <div class="flex flex-col flex-nowrap items-stretch gap-2">
+    <div v-if="useChess.state !== null && useSession.session !== null" class="flex flex-col flex-nowrap items-stretch gap-2">
         <SimpleGameStateView
-                v-if="useChess.state !== null && useSession.session !== null"
                 :state="useChess.state.state"
                 :winner="useChess.state.winner"
                 :turn="useChess.state.turn"
@@ -13,7 +12,7 @@
                        enableClick
                        :clickable="clickable"
                        @click="onClick"
-                       :itemClass="itemClass"
+                       :itemClass="(item, x, y) => `${itemClass(item, x, y)} text-[8vw]`"
             >
                 <Icon v-if="x !== 0 && x !== 9 && y !== 0 && y !== 9" :name="item"/>
                 <template v-else>
