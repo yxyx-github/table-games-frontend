@@ -77,6 +77,7 @@ useSession.initSSE((msg: MessageEvent<string>) => {
         message: i18n.t('failed_to_connect_for_automatic_updates'),
         color: 'red',
         timeout: 0,
+        closeBtn: true,
     })
 })
 
