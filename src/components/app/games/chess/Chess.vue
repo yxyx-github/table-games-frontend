@@ -225,6 +225,13 @@ useSession.initSSE((msg: MessageEvent<string>) => {
     if (['A piece has moved.', 'A piece has been promoted.', 'A piece has been castled.'].includes(msg.data)) {
         updateGameState()
     }
+}, () => {
+    $q.notify({
+        message: i18n.t('failed_to_connect_for_automatic_updates'),
+        color: 'red',
+        timeout: 0,
+        closeBtn: true,
+    })
 })
 
 updateGameState()

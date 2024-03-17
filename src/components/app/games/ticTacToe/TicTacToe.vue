@@ -72,6 +72,12 @@ useSession.initSSE((msg: MessageEvent<string>) => {
     if (msg.data === 'TIC_TAC_TOE move happened') {
         updateGameState()
     }
+}, error => {
+    $q.notify({
+        message: i18n.t('failed_to_connect_for_automatic_updates'),
+        color: 'red',
+        timeout: 0,
+    })
 })
 
 updateGameState()

@@ -9,6 +9,7 @@ const messages = {
     current_session: 'Aktuelle Sitzung',
     failed_to_castle: 'Fehler beim Rochieren',
     failed_to_close_session: 'Fehler beim Beenden der Sitzung',
+    failed_to_connect_for_automatic_updates: 'Fehler beim Verbinden für automatische Aktualisierungen. Dies passiert häufig, weil noch nicht alle Mitspieler der Sitzung beigetreten sind. Bitte lade die Seite nach deren Beitreten neu.',
     failed_to_create_session: 'Fehler beim Erstellen der Sitzung',
     failed_to_join_session: 'Fehler beim Beitreten der Sitzung',
     failed_to_load_game_list: 'Fehler beim Laden der Spieleliste',
