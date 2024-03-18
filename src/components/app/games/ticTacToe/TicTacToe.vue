@@ -60,7 +60,16 @@ function onClick({ x, y }: { x: number, y: number }) {
 }
 
 function updateGameState() {
-    useTicTacToe.loadState().catch(error =>
+    useTicTacToe.loadState().catch(error => {
+        if (error.response.status === 425) {
+            $q.notify({
+                message: `${i18n.t('game_has_not_started_yet')}: ${error}`,
+                color: 'warning',
+            })
+        } else {
+            throw error
+        }
+    }).catch(error =>
             $q.notify({
                 message: `${i18n.t('failed_to_load_game_state')}: ${error}`,
                 color: 'red',

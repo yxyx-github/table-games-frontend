@@ -7,6 +7,7 @@ const messages = {
     create_new_session: 'Neue Sitzung erstellen',
     create_session: 'Sitzung erstellen',
     current_session: 'Aktuelle Sitzung',
+    game_has_not_started_yet: 'Das Spiel hat noch nicht begonnen. Wahrscheinlich sind noch nicht alle Mitspieler beigetreten.',
     failed_to_castle: 'Fehler beim Rochieren',
     failed_to_close_session: 'Fehler beim Beenden der Sitzung',
     failed_to_connect_for_automatic_updates: 'Fehler beim Verbinden für automatische Aktualisierungen.',
