@@ -69,7 +69,7 @@ function updateGameState() {
 }
 
 useSession.initSSE((msg: MessageEvent<string>) => {
-    if (msg.data === 'TIC_TAC_TOE move happened') {
+    if (['TIC_TAC_TOE move happened', 'session joined'].includes(msg.data)) {
         updateGameState()
     }
 }, error => {

@@ -222,7 +222,7 @@ function updateGameState() {
 }
 
 useSession.initSSE((msg: MessageEvent<string>) => {
-    if (['A piece has moved.', 'A piece has been promoted.', 'A piece has been castled.'].includes(msg.data)) {
+    if (['A piece has moved.', 'A piece has been promoted.', 'A piece has been castled.', 'session joined'].includes(msg.data)) {
         updateGameState()
     }
 }, () => {
