@@ -8,3 +8,5 @@ export type BattleshipsGame = {
     gameState: BattleshipsGameState
     winner: number
 }
+
+export type BoardName = 'playerBoard' | 'opponentBoard'
