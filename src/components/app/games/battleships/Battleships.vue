@@ -6,13 +6,13 @@
                 class="flex flex-row flex-wrap items-start gap-2"
         >
             <GameField
-                    :fields="playerBoard"
                     class="grid-flow-col"
+                    :fields="playerBoard"
                     v-slot="{ item, x, y }"
                     :enableClick="useBattleships.state.gameState === BattleshipsGameState.PLACING"
                     :clickable="playerBoardClickable"
-                    @click="onPlayerBoardClick"
-                    :itemClass="(item, x, y) => itemClass('playerBoard', item, x, y)"
+                    @click="({ x, y }) => onPlayerBoardClick({ y: x, x: y })"
+                    :itemClass="(item, x, y) => itemClass('playerBoard', item, y, x)"
             >
                 <Icon v-if="coordInsideField(x, y)" :name="item"/>
                 <template v-else>
@@ -20,13 +20,13 @@
                 </template>
             </GameField>
             <GameField
-                    :fields="opponentBoard"
                     class="grid-flow-col"
+                    :fields="opponentBoard"
                     v-slot="{ item, x, y }"
                     :enableClick="useBattleships.state.gameState === BattleshipsGameState.ATTACKING && useBattleships.state?.yourTurn"
                     :clickable="opponentBoardClickable"
-                    :itemClass="(item, x, y) => itemClass('opponentBoard', item, x, y)"
-                    @click="onOpponentBoardClick"
+                    @click="({ x, y }) => onOpponentBoardClick({ y: x, x: y })"
+                    :itemClass="(item, x, y) => itemClass('opponentBoard', item, y, x)"
             >
                 <Icon v-if="coordInsideField(x, y)" :name="item"/>
                 <template v-else>
@@ -74,6 +74,22 @@ function prepareBoard(boardName: BoardName) {
             ]
 }
 
+/*function prepareBoard(boardName: BoardName) {
+    return useBattleships.state === null ? [] :
+            [
+                [' ', 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', ' '],
+                ...(useBattleships.state[boardName].map((row, index) => [
+                            `${ index + 1 }`,
+                            ...(row.map(field =>
+                                    [ShipStatus.HIT, ShipStatus.MISS].includes(field) ? 'x' : ' '
+                            )),
+                            `${ index + 1 }`,
+                        ]
+                )),
+                [' ', 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', ' '],
+            ]
+}*/
+
 function itemClass(boardName: BoardName, item: string, x: number, y: number) {
     if (!coordInsideField(x, y)) {
         return ''
@@ -98,9 +114,9 @@ const selectedPlayerBoardField = ref<{ x: number, y: number } | null>(null)
 function onPlayerBoardClick(field: { x: number, y: number }) {
     if (selectedPlayerBoardField.value === null) {
         selectedPlayerBoardField.value = field
-    } else if (selectedPlayerBoardField.value.x === field.x && selectedPlayerBoardField.value.y === field.y) {
-        selectedPlayerBoardField.value = null
-    } else if (field.x === selectedPlayerBoardField.value.x || field.y === selectedPlayerBoardField.value.y) {
+    } /*else if (selectedPlayerBoardField.value.x === field.x && selectedPlayerBoardField.value.y === field.y) {
+        selectedPlayerBoardField.value = null // TODO improve field selection, fix clearing
+    }*/ else if (field.x === selectedPlayerBoardField.value.x || field.y === selectedPlayerBoardField.value.y) {
         const isHorizontal = field.y === selectedPlayerBoardField.value.y
         const startField: { x: number, y: number } = isHorizontal ? (
                 field.x > selectedPlayerBoardField.value.x
