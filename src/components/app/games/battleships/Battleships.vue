@@ -89,7 +89,11 @@ const selectedPlayerBoardField = ref<{ x: number, y: number } | null>(null)
 
 function onPlayerBoardClick(field: { x: number, y: number }) {
     console.log('playerBoard clicked:', field)
-    selectedPlayerBoardField.value = field
+    if (selectedPlayerBoardField.value === null) {
+        selectedPlayerBoardField.value = field
+    } else if (selectedPlayerBoardField.value.x === field.x && selectedPlayerBoardField.value.y === field.y) {
+        selectedPlayerBoardField.value = null
+    }
 }
 
 function onOpponentBoardClick(field: { x: number, y: number }) {
