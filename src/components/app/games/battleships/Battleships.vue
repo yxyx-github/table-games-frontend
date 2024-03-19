@@ -5,22 +5,26 @@
                 v-if="useBattleships.state !== null && useSession.session !== null"
                 class="flex flex-row flex-wrap items-start gap-2"
         >
-            <GameField :fields="playerBoard"
-                       v-slot="{ item, x, y }"
-                       :enableClick="useBattleships.state.gameState === BattleshipsGameState.PLACING"
-                       :clickable="playerBoardClickable"
-                       @click="onPlayerBoardClick"
-                       :itemClass="(item, x, y) => itemClass('playerBoard', item, x, y)"
+            <GameField
+                    :fields="playerBoard"
+                    class="grid-flow-col"
+                    v-slot="{ item, x, y }"
+                    :enableClick="useBattleships.state.gameState === BattleshipsGameState.PLACING"
+                    :clickable="playerBoardClickable"
+                    @click="onPlayerBoardClick"
+                    :itemClass="(item, x, y) => itemClass('playerBoard', item, x, y)"
             >
                 <Icon v-if="coordInsideField(x, y)" :name="item"/>
                 <template v-else>
                     {{ item }}
                 </template>
             </GameField>
-            <GameField :fields="opponentBoard"
-                       v-slot="{ item, x, y }"
-                       :itemClass="(item, x, y) => itemClass('opponentBoard', item, x, y)"
-                       @click="onOpponentBoardClick"
+            <GameField
+                    :fields="opponentBoard"
+                    class="grid-flow-col"
+                    v-slot="{ item, x, y }"
+                    :itemClass="(item, x, y) => itemClass('opponentBoard', item, x, y)"
+                    @click="onOpponentBoardClick"
             >
                 <Icon v-if="coordInsideField(x, y)" :name="item"/>
                 <template v-else>
@@ -54,16 +58,16 @@ const opponentBoard = computed<string[][]>(() => prepareBoard('opponentBoard'))
 function prepareBoard(boardName: BoardName) {
     return useBattleships.state === null ? [] :
             [
-                [' ', 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', ' '],
+                [' ', '1', '2', '3', '4', '5', '6', '7', '8', '9', '10', ' '],
                 ...(useBattleships.state[boardName].map((row, index) => [
-                            `${ index + 1 }`,
+                            `${ String.fromCharCode(index + 65) }`,
                             ...(row.map(field =>
                                     field === ShipStatus.HIT ? 'x' : ' '
                             )),
-                            `${ index + 1 }`,
+                            `${String.fromCharCode(index + 65) }`,
                         ]
                 )),
-                [' ', 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', ' '],
+                [' ', '1', '2', '3', '4', '5', '6', '7', '8', '9', '10', ' '],
             ]
 }
 
