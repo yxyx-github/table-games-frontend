@@ -1,6 +1,6 @@
 export enum ShipStatus {
-    EMPTY,
-    SHIP,
-    HIT,
-    MISS,
+    EMPTY = 'EMPTY',
+    SHIP = 'SHIP',
+    HIT = 'HIT',
+    MISS = 'MISS',
 }

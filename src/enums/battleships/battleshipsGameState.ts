@@ -1,5 +1,5 @@
 export enum BattleshipsGameState {
-    PLACING,
-    ATTACKING,
-    DECIDED,
+    PLACING = 'PLACING',
+    ATTACKING = 'ATTACKING',
+    DECIDED = 'DECIDED',
 }

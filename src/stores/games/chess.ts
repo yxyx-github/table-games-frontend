@@ -11,7 +11,7 @@ export const useChessStore = defineStore('chess', () => {
     const state = ref<ChessGame | null>(null)
 
     async function loadState() {
-        return api.get<ChessGame>(`/games/chess/state?sessionToken=${useSession.session?.sessionToken}`).then(res => {
+        return api.get<ChessGame>(`/games/chess/state?sessionToken=${encodeURIComponent(useSession.session?.sessionToken ?? '')}`).then(res => {
             state.value = res.data
         })
     }
