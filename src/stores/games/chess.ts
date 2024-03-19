@@ -3,7 +3,7 @@ import { api } from '@/boot/axios'
 import { ref } from 'vue'
 import { useSessionStore } from '@/stores/session'
 import { ChessGame, ChessGameCastleAction, ChessGameMoveAction, ChessGamePromoteAction } from '@/types/games/chess'
-import { ChessPieceType } from '@/enums/chessPieceType'
+import { ChessPieceType } from '@/enums/chess/chessPieceType'
 
 export const useChessStore = defineStore('chess', () => {
     const useSession = useSessionStore()
