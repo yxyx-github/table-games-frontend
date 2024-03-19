@@ -19,6 +19,7 @@ const messages = {
     failed_to_promote: 'Fehler beim Befördern',
     game_not_implemented: 'Das Spiel ist nicht implementiert',
     home: 'Startseite',
+    invalid_ship_type: 'Ungültiges Schiff (ungültige Schiffslänge)',
     its_your_turn: 'Du bist am Zug.',
     join_session: 'Sitzung beitreten',
     leave_session: 'Sitzung verlassen',

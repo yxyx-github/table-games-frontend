@@ -46,6 +46,7 @@ import GameField from '@/components/app/games/lib/GameField.vue'
 import { ShipStatus } from '@/enums/battleships/shipStatus'
 import { BattleshipsGameState } from '@/enums/battleships/battleshipsGameState'
 import { BoardName } from '@/types/games/battleships'
+import { ShipType } from '@/enums/battleships/shipType'
 
 const $q = useQuasar()
 const i18n = useI18n()
@@ -99,22 +100,31 @@ function onPlayerBoardClick(field: { x: number, y: number }) {
         selectedPlayerBoardField.value = null
     } else if (field.x === selectedPlayerBoardField.value.x || field.y === selectedPlayerBoardField.value.y) {
         const isHorizontal = field.y === selectedPlayerBoardField.value.y
-        const startField = isHorizontal ? (
+        const startField: { x: number, y: number } = isHorizontal ? (
                 field.x > selectedPlayerBoardField.value.x
-                        ? selectedPlayerBoardField.value.x
-                        : field.x
+                        ? selectedPlayerBoardField.value
+                        : field
         ) : (
                 field.y > selectedPlayerBoardField.value.y
-                        ? selectedPlayerBoardField.value.y
-                        : field.y
+                        ? selectedPlayerBoardField.value
+                        : field
         )
         const size = Math.abs(
                 isHorizontal
                         ? field.x - selectedPlayerBoardField.value.x
                         : field.y - selectedPlayerBoardField.value.y
         ) + 1
-        selectedPlayerBoardField.value = null
-        console.log('place ship of size', size, isHorizontal ? 'horizontal' : 'vertical')
+        const shipType: ShipType | null = shipSizeToShipType(size)
+        if (shipType === null) {
+            $q.notify({
+                message: i18n.t('invalid_ship_type'),
+                color: 'red',
+            })
+        } else {
+            selectedPlayerBoardField.value = null
+            console.log('place ship of size', size, isHorizontal ? 'horizontal' : 'vertical', 'at', startField)
+            useBattleships.placeShip(startField.x - 1, startField.y - 1, isHorizontal, shipType)
+        }
     } else {
         $q.notify({
             message: i18n.t('ships_cannot_be_placed_diagonal'),
@@ -129,6 +139,23 @@ function onOpponentBoardClick(field: { x: number, y: number }) {
 
 function playerBoardClickable(item: string, x: number, y: number) {
     return coordInsideField(x, y);
+}
+
+function shipSizeToShipType(size: number): ShipType | null {
+    switch (size) {
+        case 1:
+            return ShipType.DESTROYER
+        case 2:
+            return ShipType.SUBMARINE
+        case 3:
+            return ShipType.CRUISER
+        case 4:
+            return ShipType.BATTLESHIP
+        case 5:
+            return ShipType.CARRIER
+        default:
+            return null
+    }
 }
 
 function updateGameState() {
