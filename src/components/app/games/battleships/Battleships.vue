@@ -8,6 +8,7 @@
             <GameField :fields="playerBoard"
                        v-slot="{ item, x, y }"
                        :enableClick="useBattleships.state.gameState === BattleshipsGameState.PLACING"
+                       :clickable="playerBoardClickable"
                        @click="onPlayerBoardClick"
                        :itemClass="(item, x, y) => itemClass('playerBoard', item, x, y)"
             >
@@ -69,7 +70,7 @@ function prepareBoard(boardName: BoardName) {
 function itemClass(boardName: BoardName, item: string, x: number, y: number) {
     if (!coordInsideField(x, y)) {
         return ''
-    } else if (selectedField.value?.x === x && selectedField.value?.y === y) {
+    } else if (boardName === 'playerBoard' && selectedPlayerBoardField.value?.x === x && selectedPlayerBoardField.value?.y === y) {
         return 'bg-yellow-400'
     } else if (useBattleships.state?.[boardName][x - 1]?.[y - 1] === ShipStatus.EMPTY) {
         return 'bg-white'
@@ -84,14 +85,19 @@ function coordInsideField(x: number, y: number) {
     return x !== 0 && x !== 11 && y !== 0 && y !== 11
 }
 
-const selectedField = ref<{ x: number, y: number } | null>(null)
+const selectedPlayerBoardField = ref<{ x: number, y: number } | null>(null)
 
 function onPlayerBoardClick(field: { x: number, y: number }) {
     console.log('playerBoard clicked:', field)
+    selectedPlayerBoardField.value = field
 }
 
 function onOpponentBoardClick(field: { x: number, y: number }) {
     console.log('opponentBoard clicked:', field)
+}
+
+function playerBoardClickable(item: string, x: number, y: number) {
+    return coordInsideField(x, y);
 }
 
 function updateGameState() {
