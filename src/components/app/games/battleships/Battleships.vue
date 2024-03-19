@@ -63,7 +63,7 @@ function prepareBoard(boardName: BoardName) {
                 ...(useBattleships.state[boardName].map((row, index) => [
                             `${ String.fromCharCode(index + 65) }`,
                             ...(row.map(field =>
-                                    field === ShipStatus.HIT ? 'x' : ' '
+                                    [ShipStatus.HIT, ShipStatus.MISS].includes(field) ? 'x' : ' '
                             )),
                             `${String.fromCharCode(index + 65) }`,
                         ]
@@ -79,8 +79,6 @@ function itemClass(boardName: BoardName, item: string, x: number, y: number) {
         return 'bg-yellow-400'
     } else if (useBattleships.state?.[boardName][x - 1]?.[y - 1] === ShipStatus.EMPTY) {
         return 'bg-white'
-    } else if (useBattleships.state?.[boardName][x - 1]?.[y - 1] === ShipStatus.MISS) {
-        return 'bg-gray-200'
     } else {
         return 'bg-gray-400'
     }
