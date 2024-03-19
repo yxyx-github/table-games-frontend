@@ -26,6 +26,7 @@ const messages = {
     players: 'Spieler',
     promote: 'Befördern',
     session_token: 'Sitzungsschlüssel',
+    ships_cannot_be_placed_diagonal: 'Schiffe können nicht diagonal angeordnet werden',
     username: 'Bentzername',
     wait_for_action_of_other_player: 'Warte auf Aktion von einem Mitspieler.',
     you_won: 'Du hast gewonnen.',

@@ -97,6 +97,29 @@ function onPlayerBoardClick(field: { x: number, y: number }) {
         selectedPlayerBoardField.value = field
     } else if (selectedPlayerBoardField.value.x === field.x && selectedPlayerBoardField.value.y === field.y) {
         selectedPlayerBoardField.value = null
+    } else if (field.x === selectedPlayerBoardField.value.x || field.y === selectedPlayerBoardField.value.y) {
+        const isHorizontal = field.y === selectedPlayerBoardField.value.y
+        const startField = isHorizontal ? (
+                field.x > selectedPlayerBoardField.value.x
+                        ? selectedPlayerBoardField.value.x
+                        : field.x
+        ) : (
+                field.y > selectedPlayerBoardField.value.y
+                        ? selectedPlayerBoardField.value.y
+                        : field.y
+        )
+        const size = Math.abs(
+                isHorizontal
+                        ? field.x - selectedPlayerBoardField.value.x
+                        : field.y - selectedPlayerBoardField.value.y
+        ) + 1
+        selectedPlayerBoardField.value = null
+        console.log('place ship of size', size, isHorizontal ? 'horizontal' : 'vertical')
+    } else {
+        $q.notify({
+            message: i18n.t('ships_cannot_be_placed_diagonal'),
+            color: 'red',
+        })
     }
 }
 
