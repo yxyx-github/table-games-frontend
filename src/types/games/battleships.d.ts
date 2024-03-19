@@ -18,3 +18,8 @@ export type BattleshipsPlaceShipAction = GameAction & {
     shipType: number
     isHorizontal: boolean
 }
+
+export type BattleshipsAttackAction = GameAction & {
+    x: number
+    y: number
+}

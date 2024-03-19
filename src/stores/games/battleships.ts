@@ -2,7 +2,7 @@ import { defineStore } from 'pinia';
 import { api } from '@/boot/axios'
 import { ref } from 'vue'
 import { useSessionStore } from '@/stores/session'
-import { BattleshipsGame } from '@/types/games/battleships'
+import { BattleshipsAttackAction, BattleshipsGame, BattleshipsPlaceShipAction } from '@/types/games/battleships'
 import { ShipType } from '@/enums/battleships/shipType'
 
 export const useBattleshipsStore = defineStore('battleships', () => {
@@ -26,7 +26,7 @@ export const useBattleshipsStore = defineStore('battleships', () => {
     }
 
     async function placeShip(x: number, y: number, isHorizontal: boolean, shipType: ShipType) {
-        return api.post<any, void>('/games/battleships/placeShip', {
+        return api.post<BattleshipsPlaceShipAction, void>('/games/battleships/placeShip', {
             sessionToken: useSession.session?.sessionToken,
             authToken: useSession.session?.authToken,
             userId: useSession.session?.user.id,
@@ -37,9 +37,20 @@ export const useBattleshipsStore = defineStore('battleships', () => {
         })
     }
 
+    async function attack(x: number, y: number) {
+        return api.post<BattleshipsAttackAction, void>('/games/battleships/attack', {
+            sessionToken: useSession.session?.sessionToken,
+            authToken: useSession.session?.authToken,
+            userId: useSession.session?.user.id,
+            x,
+            y,
+        })
+    }
+
     return {
         state,
         loadState,
         placeShip,
+        attack,
     }
 })

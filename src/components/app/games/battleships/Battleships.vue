@@ -1,6 +1,6 @@
 <template>
     <div class="flex flex-col flex-nowrap items-stretch gap-2">
-        Battleships {{ useBattleships.state?.gameState }}
+        Battleships {{ useBattleships.state?.gameState }} {{ useBattleships.state?.yourTurn ? 'has Turn' : 'wait' }}
         <div
                 v-if="useBattleships.state !== null && useSession.session !== null"
                 class="flex flex-row flex-wrap items-start gap-2"
@@ -23,6 +23,8 @@
                     :fields="opponentBoard"
                     class="grid-flow-col"
                     v-slot="{ item, x, y }"
+                    :enableClick="useBattleships.state.gameState === BattleshipsGameState.ATTACKING && useBattleships.state?.yourTurn"
+                    :clickable="opponentBoardClickable"
                     :itemClass="(item, x, y) => itemClass('opponentBoard', item, x, y)"
                     @click="onOpponentBoardClick"
             >
@@ -77,7 +79,10 @@ function itemClass(boardName: BoardName, item: string, x: number, y: number) {
         return ''
     } else if (boardName === 'playerBoard' && selectedPlayerBoardField.value?.x === x && selectedPlayerBoardField.value?.y === y) {
         return 'bg-yellow-400'
-    } else if (useBattleships.state?.[boardName][x - 1]?.[y - 1] === ShipStatus.EMPTY) {
+    } else if (
+            ([ShipStatus.EMPTY, ShipStatus.MISS] as (ShipStatus | undefined)[])
+                    .includes(useBattleships.state?.[boardName][x - 1]?.[y - 1])
+    ) {
         return 'bg-white'
     } else {
         return 'bg-gray-400'
@@ -91,7 +96,6 @@ function coordInsideField(x: number, y: number) {
 const selectedPlayerBoardField = ref<{ x: number, y: number } | null>(null)
 
 function onPlayerBoardClick(field: { x: number, y: number }) {
-    console.log('playerBoard clicked:', field)
     if (selectedPlayerBoardField.value === null) {
         selectedPlayerBoardField.value = field
     } else if (selectedPlayerBoardField.value.x === field.x && selectedPlayerBoardField.value.y === field.y) {
@@ -120,8 +124,12 @@ function onPlayerBoardClick(field: { x: number, y: number }) {
             })
         } else {
             selectedPlayerBoardField.value = null
-            console.log('place ship of size', size, isHorizontal ? 'horizontal' : 'vertical', 'at', startField)
-            useBattleships.placeShip(startField.x - 1, startField.y - 1, isHorizontal, shipType)
+            useBattleships.placeShip(startField.x - 1, startField.y - 1, isHorizontal, shipType).catch(error =>
+                    $q.notify({
+                        message: `${i18n.t('failed_to_place_ship')}: ${error}`,
+                        color: 'red',
+                    })
+            )
         }
     } else {
         $q.notify({
@@ -133,10 +141,20 @@ function onPlayerBoardClick(field: { x: number, y: number }) {
 
 function onOpponentBoardClick(field: { x: number, y: number }) {
     console.log('opponentBoard clicked:', field)
+    useBattleships.attack(field.x - 1, field.y - 1).catch(error =>
+            $q.notify({
+                message: `${i18n.t('failed_to_attack')}: ${error}`,
+                color: 'red',
+            })
+    )
 }
 
 function playerBoardClickable(item: string, x: number, y: number) {
-    return coordInsideField(x, y);
+    return coordInsideField(x, y); // TODO: check if field is ship or has ship as neighbour
+}
+
+function opponentBoardClickable(item: string, x: number, y: number) {
+    return coordInsideField(x, y); // TODO: check if field was already attacked
 }
 
 function shipSizeToShipType(size: number): ShipType | null {
