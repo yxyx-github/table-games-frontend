@@ -1,6 +1,21 @@
 <template>
     <div class="flex flex-col flex-nowrap items-stretch gap-2">
-        Battleships {{ useBattleships.state?.gameState }} {{ useBattleships.state?.yourTurn ? 'has Turn' : 'wait' }}
+        <template v-if="useBattleships.state?.gameState === BattleshipsGameState.DECIDED">
+            <q-banner v-if="useBattleships.state?.winner === useSession.session?.user.id" class="rounded bg-positive text-white">
+                {{ $t('you_won') }}
+            </q-banner>
+            <q-banner v-else class="rounded bg-negative text-white">
+                {{ $t('you_lost') }}
+            </q-banner>
+        </template>
+        <template v-else>
+            <q-banner v-if="useBattleships.state?.yourTurn" class="rounded bg-primary text-white">
+                {{ $t('its_your_turn') }}
+            </q-banner>
+            <q-banner v-else class="rounded bg-info text-white">
+                {{ $t('wait_for_action_of_other_player') }}
+            </q-banner>
+        </template>
         <div
                 v-if="useBattleships.state !== null && useSession.session !== null"
                 class="flex flex-row flex-wrap items-start gap-2"
@@ -73,22 +88,6 @@ function prepareBoard(boardName: BoardName) {
                 [' ', '1', '2', '3', '4', '5', '6', '7', '8', '9', '10', ' '],
             ]
 }
-
-/*function prepareBoard(boardName: BoardName) {
-    return useBattleships.state === null ? [] :
-            [
-                [' ', 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', ' '],
-                ...(useBattleships.state[boardName].map((row, index) => [
-                            `${ index + 1 }`,
-                            ...(row.map(field =>
-                                    [ShipStatus.HIT, ShipStatus.MISS].includes(field) ? 'x' : ' '
-                            )),
-                            `${ index + 1 }`,
-                        ]
-                )),
-                [' ', 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', ' '],
-            ]
-}*/
 
 function itemClass(boardName: BoardName, item: string, x: number, y: number) {
     if (!coordInsideField(x, y)) {
