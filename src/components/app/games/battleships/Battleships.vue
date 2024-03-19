@@ -1,14 +1,6 @@
 <template>
     <div class="flex flex-col flex-nowrap items-stretch gap-2">
-        <template v-if="useBattleships.state?.gameState === BattleshipsGameState.DECIDED">
-            <q-banner v-if="useBattleships.state?.winner === useSession.session?.user.id" class="rounded bg-positive text-white">
-                {{ $t('you_won') }}
-            </q-banner>
-            <q-banner v-else class="rounded bg-negative text-white">
-                {{ $t('you_lost') }}
-            </q-banner>
-        </template>
-        <template v-else>
+        <template v-if="useBattleships.state?.gameState === BattleshipsGameState.ATTACKING">
             <q-banner v-if="useBattleships.state?.yourTurn" class="rounded bg-primary text-white">
                 {{ $t('its_your_turn') }}
             </q-banner>
@@ -16,6 +8,17 @@
                 {{ $t('wait_for_action_of_other_player') }}
             </q-banner>
         </template>
+        <template v-else-if="useBattleships.state?.gameState === BattleshipsGameState.DECIDED">
+            <q-banner v-if="useBattleships.state?.winner === useSession.session?.user.id" class="rounded bg-positive text-white">
+                {{ $t('you_won') }}
+            </q-banner>
+            <q-banner v-else class="rounded bg-negative text-white">
+                {{ $t('you_lost') }}
+            </q-banner>
+        </template>
+        <q-banner v-else class="rounded bg-primary text-white">
+            {{ $t('place_your_ships') }}
+        </q-banner>
         <div
                 v-if="useBattleships.state !== null && useSession.session !== null"
                 class="flex flex-row flex-wrap items-start gap-2"

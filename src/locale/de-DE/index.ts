@@ -26,6 +26,7 @@ const messages = {
     join_session: 'Sitzung beitreten',
     leave_session: 'Sitzung verlassen',
     no_winner: 'Es gibt keinen Gewinner',
+    place_your_ships: 'Platziere deine Schiffe',
     players: 'Spieler',
     promote: 'Befördern',
     session_token: 'Sitzungsschlüssel',
