@@ -21,7 +21,6 @@ export const useBattleshipsStore = defineStore('battleships', () => {
             }`
         ).then(res => {
             state.value = res.data
-            console.log(state.value)
         })
     }
 

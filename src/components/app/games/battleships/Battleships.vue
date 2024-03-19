@@ -156,7 +156,6 @@ function onPlayerBoardClick(field: { x: number, y: number }) {
 }
 
 function onOpponentBoardClick(field: { x: number, y: number }) {
-    console.log('opponentBoard clicked:', field)
     useBattleships.attack(field.x - 1, field.y - 1).catch(error =>
             $q.notify({
                 message: `${i18n.t('failed_to_attack')}: ${error}`,
@@ -209,8 +208,7 @@ function updateGameState() {
 }
 
 useSession.initSSE((msg: MessageEvent<string>) => {
-    // TODO: add messages
-    if (true || [''].includes(msg.data)) {
+    if (['BATTLESHIPS ship placed', 'BATTLESHIPS attack happened', 'session joined'].includes(msg.data)) {
         updateGameState()
     }
 }, () => {
