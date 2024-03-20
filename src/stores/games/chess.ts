@@ -3,7 +3,7 @@ import { api } from '@/boot/axios'
 import { ref } from 'vue'
 import { useSessionStore } from '@/stores/session'
 import { ChessGame, ChessGameCastleAction, ChessGameMoveAction, ChessGamePromoteAction } from '@/types/games/chess'
-import { ChessPieceType } from '@/enums/chessPieceType'
+import { ChessPieceType } from '@/enums/chess/chessPieceType'
 
 export const useChessStore = defineStore('chess', () => {
     const useSession = useSessionStore()
@@ -11,7 +11,7 @@ export const useChessStore = defineStore('chess', () => {
     const state = ref<ChessGame | null>(null)
 
     async function loadState() {
-        return api.get<ChessGame>(`/games/chess/state?sessionToken=${useSession.session?.sessionToken}`).then(res => {
+        return api.get<ChessGame>(`/games/chess/state?sessionToken=${encodeURIComponent(useSession.session?.sessionToken ?? '')}`).then(res => {
             state.value = res.data
         })
     }

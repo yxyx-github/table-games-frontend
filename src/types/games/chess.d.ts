@@ -1,6 +1,6 @@
-import { ChessPiece } from '@/enums/chessPiece'
+import { ChessPiece } from '@/enums/chess/chessPiece'
 import { GameAction } from '@/types/game'
-import { ChessPieceType } from '@/enums/chessPieceType'
+import { ChessPieceType } from '@/enums/chess/chessPieceType'
 import { SimpleGameState } from '@/enums/simpleGameState'
 
 export type ChessGame = {
